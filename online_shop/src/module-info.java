@@ -1,0 +1,2 @@
+module online_shop {
+}
