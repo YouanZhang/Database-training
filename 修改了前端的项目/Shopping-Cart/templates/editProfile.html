@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+
+<!-- <head>
+    <title>Edit Profile </title>
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' ) }} />
+</head> -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Edit Profile </title>
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' ) }} />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS 
+    ========================= -->
+    <!--bootstrap min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/bootstrap.min.css" )}}>
+
+    <!--owl carousel min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/owl.carousel.min.css" )}}>
+
+    <!--slick min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/slick.css" )}}>
+
+    <!--magnific popup min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/magnific-popup.css" )}}>
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/font.awesome.css" )}}>
+
+    <!--ionicons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/ionicons.min.css" )}}>
+
+    <!--7 stroke icons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/pe-icon-7-stroke.css" )}}>
+
+    <!--animate css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/animate.css" )}}>
+
+    <!--jquery ui min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/jquery-ui.min.css" )}}>
+
+    <!--plugins css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/plugins.css" )}}>
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
+
+    <!--modernizr min js here-->
+    <!-- <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script> -->
+
+
+</head>
+
+<body>
+    <div id="title">
+        <a href="/">
+            <img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
+        </a>
+        <form>
+            <input id="searchBox" type="text" name="searchQuery">
+            <input id="searchButton" type="submit" value="Search">
+        </form>
+
+        {% if not loggedIn %}
+        <div id="signInButton">
+            <a class="link" href="/loginForm">Sign In</a>
+        </div>
+        {% else %}
+        <div class="dropdown">
+            <button class="dropbtn">Hello, <br>{{firstName}}</button>
+            <div class="dropdown-content">
+                <a href="/account/orders">Your orders</a>
+                <a href="/account/profile">Your profile</a>
+                <hr>
+                <a href="/logout">Sign Out</a>
+            </div>
+        </div>
+        {% endif %}
+        <div id="kart">
+            <a class="link" href="/cart">
+                <img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
+            </a>
+        </div>
+    </div>
+
+    <!-- <div class="display">
+        <h2>Edit profile</h2>
+        <form action="/updateProfile" method="POST">
+            <p>Email:<input type="email" name="email" value={{profileData[1]}} readonly="readonly"></p>
+            <p>First Name:<input type="text" name="firstName" value={{profileData[2]}}></p>
+            <p>Last Name: <input type="text" name="lastName" value={{profileData[3]}}></p>
+            <p>Address 1: <input type="text" name="address1" value={{profileData[4]}}></p>
+            <p>Address 2: <input type="text" name="address2" value={{profileData[5]}}></p>
+            <p>Zip Code: <input type="text" name="zipcode" value={{profileData[6]}}></p>
+            <p>City: <input type="text" name="city" value={{profileData[7]}}></p>
+            <p>State: <input type="text" name="state" value={{profileData[8]}}></p>
+            <p>Country: <input type="text" name="country" value={{profileData[9]}}></p>
+            <p>Phone Number: <input type="text" name="phone" value={{profileData[10]}}></p>
+            <input type="submit" value="Save">
+        </form>
+    </div> -->
+
+    <div class="off_canvars_overlay">
+    </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <div class="breadcrumbs_area breadcrumbs_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <h3>Edit Profile</h3>
+                        <ul>
+                            <li><a href="/account/profile">我的信息</a></li>
+                            <li>Edit Profile</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6">
+        <div class="account_form">
+            <h2>Edit Profile</h2>
+            <form action="/updateProfile" method="POST">
+                <p>
+                    <label>Email address <span>*</span></label>
+                    <input type="email" name="email" value={{profileData[1]}} readonly="readonly">
+                </p>
+                <p>
+                    <label>First Name <span>*</span></label>
+                    <input type="text" name="firstName" value={{profileData[2]}}>
+                </p>
+                <p>
+                    <label>Last Name <span>*</span></label>
+                    <input type="text" name="lastName" value={{profileData[3]}}>
+                </p>
+                <p>
+                    <label>Address Line 1 <span>*</span></label>
+                    <input type="text" name="address1" value={{profileData[4]}}>
+                </p>
+                <p>
+                    <label>Address Line 2 <span>*</span></label>
+                    <input type="text" name="address2" value={{profileData[5]}}>
+                </p>
+                <p>
+                    <label>Zipcode <span>*</span></label>
+                    <input type="text" name="zipcode" value={{profileData[6]}}>
+                </p>
+                <p>
+                    <label>City <span>*</span></label>
+                    <input type="text" name="city" value={{profileData[7]}}>
+                </p>
+                <p>
+                    <label>State <span>*</span></label>
+                    <input type="text" name="state" value={{profileData[8]}}>
+                </p>
+                <p>
+                    <label>Country <span>*</span></label>
+                    <input type="text" name="country" value={{profileData[9]}}>
+                </p>
+                <p>
+                    <label>Phone Number <span>*</span></label>
+                    <input type="text" name="phone" value={{profileData[10]}}>
+                </p>
+                <div class="login_submit">
+                    <button type="submit" value="Save">Save</button>
+                    <!-- <input type="submit" value="Save"> -->
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: inline;"><i
+		class="fa fa-angle-double-up"></i></a>
+
+</body>
+
+</html>
