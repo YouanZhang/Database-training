@@ -3,8 +3,49 @@
 
 <head>
     <title>Your Cart</title>
-    <link rel="stylesheet" href={{url_for( 'static', filename='css/cart.css' )}} />
-    <link rel="stylesheet" href={{url_for( 'static', filename='css/topStyle.css' ) }} />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' ) }} />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS 
+    ========================= -->
+    <!--bootstrap min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/bootstrap.min.css" )}}>
+
+    <!--owl carousel min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/owl.carousel.min.css" )}}>
+
+    <!--slick min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/slick.css" )}}>
+
+    <!--magnific popup min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/magnific-popup.css" )}}>
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/font.awesome.css" )}}>
+
+    <!--ionicons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/ionicons.min.css" )}}>
+
+    <!--7 stroke icons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/pe-icon-7-stroke.css" )}}>
+
+    <!--animate css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/animate.css" )}}>
+
+    <!--jquery ui min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/jquery-ui.min.css" )}}>
+
+    <!--plugins css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/plugins.css" )}}>
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
 </head>
 
 <body>
@@ -40,7 +81,7 @@
     </div>
 
 
-    <div id="cartItems">
+    <!-- <div id="cartItems">
         <h2>Shopping Cart</h2>
         <div id="tableItems">
             {% for row in products %}
@@ -63,10 +104,98 @@
                 <span id="subtotal">Subtotal</span> : ${{totalPrice}}
             </div>
         </div>
+    </div> -->
+
+    <div class="breadcrumbs_area  breadcrumbs_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <h3>cart</h3>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li>cart</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="shopping_cart_area">
+        <div class="container">
+            <form action="#">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table_desc">
+                            <div class="cart_page table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">Delete</th>
+                                            <th class="product_thumb">Image</th>
+                                            <th class="product_name">Product</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product_quantity">Quantity</th>
+                                            <th class="product_total">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- 每个商品展示为一个tr -->
+                                        <tr>
+                                            <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="product_thumb">
+                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
+                                            </td>
+                                            <td class="product_name"><a href="#">商品名</a></td>
+                                            <td class="product-price">商品单价</td>
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
+                                            <td class="product_total">商品总价 = 单价*数量</td>
 
-    <a href="/checkout">Proceed to checkout</a>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="product_thumb">
+                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
+                                            </td>
+                                            <td class="product_name"><a href="#">商品名</a></td>
+                                            <td class="product-price">商品单价</td>
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
+                                            <td class="product_total">商品总价</td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area start-->
+                <div class="coupon_area">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code right">
+                                <h3>Cart Totals</h3>
+                                <div class="coupon_inner">
+                                    <div class="cart_subtotal">
+                                        <p>Total</p>
+                                        <p class="cart_amount">购物车总价</p>
+                                    </div>
+                                    <div class="checkout_btn">
+                                        <!-- 这里放结算的链接 -->
+                                        <a href="">这里放结算的链接</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--coupon code area end-->
+            </form>
+        </div>
+    </div>
 
 
 </body>
