@@ -1,4 +1,4 @@
-from link_database import *
+from DAO.link_database import *
 
 def buyer_login_info_valid(email, password):
     conn = link_mysql()

@@ -1,8 +1,4 @@
-from flask import *
-import sqlite3, hashlib, os
-import mysql.connector
-from werkzeug.utils import secure_filename
-from link_database import *
+from DAO.link_database import *
 
 
 def close_db_link(conn):

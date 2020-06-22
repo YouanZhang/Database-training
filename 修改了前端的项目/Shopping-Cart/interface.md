@@ -17,3 +17,14 @@
 加仓库接口
 
 返回类型 bool addstore(shop_id, sku_id, qty)
+
+查询用户 
+
+返回类型 bool, list find_buyer_by_id(id)
+
+返回类型 bool, list find_buyer_by_email(id)
+
+查询商家
+
+返回类型 bool, list find_shop_by_id(id)
+返回类型 bool, list find_shop_by_email()
