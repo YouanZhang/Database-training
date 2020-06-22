@@ -2,9 +2,8 @@ from flask import *
 import sqlite3, hashlib, os
 import mysql.connector
 from werkzeug.utils import secure_filename
-def link_mysql():
-    conn = mysql.connector.connect(user='root', password='vRt5leRdr8*t', database='online_shop2', use_unicode=True)
-    return conn
+from link_database import *
+
 
 def close_db_link(conn):
     conn.close()
@@ -39,5 +38,6 @@ def addSPU(name, desc, qty):
     cur.close()
     conn.close()
     print('Successfully INSERT INTO SHOP VALUES (NULL, %s, %s, %s);',(name, desc, qty))
+
 
 

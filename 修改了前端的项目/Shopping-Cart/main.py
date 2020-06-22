@@ -9,10 +9,6 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def link_database()
-    conn = mysql.connector.connect(user='root', password='0302', database='online_shop2', use_unicode=True,
-                                   auth_plugin='mysql_native_password')
-    return conn.cursor()
 def getLoginDetails():
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
