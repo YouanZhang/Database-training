@@ -27,4 +27,13 @@
 查询商家
 
 返回类型 bool, list find_shop_by_id(id)
+
 返回类型 bool, list find_shop_by_email()
+
+加购物车
+
+返回类型 bool addcart(buyer_id, sku_id, qty)
+
+查询购物车
+
+返回类型 list findcart(buyer_id, sku_id)
