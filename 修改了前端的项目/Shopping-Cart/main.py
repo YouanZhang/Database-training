@@ -1,6 +1,6 @@
 from flask import *
 import sqlite3, hashlib, os
-# import mysql.connector
+import mysql.connector
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -119,17 +119,18 @@ def profileHome():
     loggedIn, firstName, noOfItems = getLoginDetails()
     return render_template("profileHome.html", loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
-@app.route("/myshop")
-def myshop():
-    if 'email' not in session:
-        return redirect(url_for('root'))
-    loggedIn, firstName, noOfItems = getLoginDetails()
-    with sqlite3.connect('database.db') as conn:
-        cur = conn.cursor()
-        cur.execute("SELECT userId, email, firstName, lastName, address1, address2, zipcode, city, state, country, phone FROM users WHERE email = ?", (session['email'], ))
-        profileData = cur.fetchone()
-    conn.close()
-    return render_template("myshop.html", profileData=profileData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+
+# @app.route("/myshop")
+# def myshop():
+#     if 'email' not in session:
+#         return redirect(url_for('root'))
+#     loggedIn, firstName, noOfItems = getLoginDetails()
+#     with sqlite3.connect('database.db') as conn:
+#         cur = conn.cursor()
+#         cur.execute("SELECT userId, email, firstName, lastName, address1, address2, zipcode, city, state, country, phone FROM users WHERE email = ?", (session['email'], ))
+#         profileData = cur.fetchone()
+#     conn.close()
+#     return render_template("myshop.html", profileData=profileData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 
 
 @app.route("/account/profile/edit")
@@ -324,34 +325,44 @@ def is_valid(email, password):
             return True
     return False
 
-@app.route("/register", methods = ['GET', 'POST'])
+
+@app.route("/test_register", methods = ['POST'])
 def register():
     if request.method == 'POST':
-        #Parse form data    
-        password = request.form['password']
-        email = request.form['email']
-        firstName = request.form['firstName']
-        lastName = request.form['lastName']
-        address1 = request.form['address1']
-        address2 = request.form['address2']
-        zipcode = request.form['zipcode']
-        city = request.form['city']
-        state = request.form['state']
-        country = request.form['country']
-        phone = request.form['phone']
-
-        with sqlite3.connect('database.db') as con:
-            try:
-                cur = con.cursor()
-                cur.execute('INSERT INTO users (password, email, firstName, lastName, address1, address2, zipcode, city, state, country, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (hashlib.md5(password.encode()).hexdigest(), email, firstName, lastName, address1, address2, zipcode, city, state, country, phone))
-
-                con.commit()
-
+        #连接数据库
+        conn = mysql.connector.connect(user='root',password='0302',database='online_shop2',use_unicode=True, auth_plugin='mysql_native_password')
+        try:
+            cur = conn.cursor()
+            #buyer注册
+            if request.form['is_buyer']=='True':
+                #解析表单数据
+                name = request.form['name']
+                password = request.form['password']
+                email = request.form['email']
+                address = request.form['address']
+                #按照递增方式分配id
+                #将注册信息插入数据库
+                cur.execute('INSERT INTO BUYER VALUES (NULL,%s,%s,%s,%s);',(name,password,email,address))
+                conn.commit()
                 msg = "Registered Successfully"
-            except:
-                con.rollback()
-                msg = "Error occured"
-        con.close()
+                print("yes insert INSERT INTO BUYER VALUES (NULL,%s,%s,%s,%s);",(name,password,email,address))
+            else:
+                #解析表单数据
+                name = request.form['name']
+                #description = request.form['description']
+                password = request.form['password']
+                email = request.form['email']
+                #将注册信息插入数据库
+                cur.execute('INSERT INTO SHOP VALUES (NULL,%s,NULL,%s,%s);',(name,password,email))
+                conn.commit()
+                msg = "Registered Successfully"
+                print('yes INSERT INTO SHOP VALUES (NULL,%s,NULL,%s,%s);',(name,password,email))
+        except:
+            conn.rollback()
+            msg = "Error occured"
+        finally:
+            cur.close()
+            conn.close()
         return render_template("login.html", error=msg)
 
 @app.route("/registerationForm")
@@ -367,65 +378,12 @@ def to_bool_or_none(bool_str):
         return False
     
 
-@app.route("/test_register", methods = ['POST'])
-def test_register():
-    if request.method == 'POST':
- 
-    	#连接数据库
-    	with mysql.connector.connect(user='root',password='root',database='online_shop2',use_unicode=True) as conn:
-    		try:
-		        cursor = conn.cursor()
-		        is_a_buyer= to_bool_or_none(request.args.get('is_buyer', None, type=str))
-
-		        #buyer注册
-		        if is_a_buyer :
-
-		        	#解析表单数据
-		            buyerID = 1
-		            name = request.form['name']
-		            password = request.form['password']
-		            email = request.form['email']
-		            address = request.form['address']
-
-		            #按照递增方式分配id
-		            cur.execute('select max(buyer_id) as maxbid from buyer;')
-		            ans = cur.fetchall();
-		            if ans[0][0]!=null:
-		            	buyerID = ans[0][0]+1
-
-		            #将注册信息插入数据库
-		            cur.execute('INSERT INTO BUYER VALUES (%s,%s,%s,%s,%s);',(buyerID,name,password,email,address))
-		            conn.commit()
-		            msg = "Registered Successfully"
-
-		        #shop注册
-		        else :
-
-		        	#解析表单数据
-		            shopID = 1
-		            name = request.form['name']
-		            description = request.form['description']
-		            password = request.form['password']
-		            email = request.form['email']
-		            
-		            #按照递增方式分配id
-		            cur.execute('select max(shop_id) as maxsid from shop;')
-		            ans = cur.fetchall();
-		            if ans[0][0]!=null:
-		            	shopID = ans[0][0]+1
-
-		            #将注册信息插入数据库
-		            cur.execute('INSERT INTO SHOP VALUES (%s,%s,%s,%s,%s);',(shopID,name,description,password,email))
-		            conn.commit()
-		            msg = "Registered Successfully"
-
-    		except:
-		    	conn.rollback()
-		    	msg = "Error occured"
-    		finally:
-		    	cursor.close()
-		    	conn.close()
-    	return render_template("login.html", error=msg)    
+@app.route("/myshop")
+def myshop():
+    list1 = ['iPhone', 'xiaomi', 'huawei']
+    iPhone = ['iPhone 8', 'iPhone X']
+    xiaomi = ['xiaomi 6', 'xiaomi 8', 'xiaomi 10']
+    return render_template("myshop.html", list1 = list1)
 
 def allowed_file(filename):
     return '.' in filename and \

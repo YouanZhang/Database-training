@@ -54,7 +54,7 @@
     <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
 
     <!--modernizr min js here-->
-    <!-- <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script> -->
+    <script src="{{ url_for( 'static', filename='assets/js/vendor/modernizr-3.7.1.min.js' )}}"></script>
 
 
 </head>
@@ -91,12 +91,104 @@
         </div>
     </div>
 
+    <div class="shop_area shop_reverse">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <!--sidebar widget start-->
+                <aside class="sidebar_widget">
+                    <div class="widget_inner">
+                        <div class="widget_list widget_categories">
+                            <!-- 这里放spu -->
+                            <ul>
+                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">iPhone</a>
+                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
+                                        <li><a href="#">iPhone 7</a></li>
+                                        <li><a href="#">iPhone 8</a></li>
+                                        <li><a href="#">iPhone X</a></li>
+                                    </ul>
+                                </li>
+                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">小米</a>
+                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
+                                        <li><a href="#">小米 6</a></li>
+                                        <li><a href="#">小米 8</a></li>
+                                        <li><a href="#">小米 10</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/add_spu">新增</a>
+                                </li>
+                                {% for i in list1 %}
+                                <li>{{i}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <!--sidebar widget end-->
+            </div>
+            <div class="col-lg-9 col-md-12">
+                <!--shop wrapper start-->
 
+                <div class="row shop_wrapper grid_list">
+                    <!-- 这里放sku -->
+                    <div class="col-12">
+                        <div class="single_product">
+                            <div class="product_thumb">
+                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
+                            </div>
+                            <div class="product_content list_content">
+                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
+                                <div class="price_box">
+                                    <span class="current_price">$79.00</span>
+                                </div>
+                                <div class="product_desc">
+                                    这里写具体商品描述
+                                </div>
+                                <div>
+                                    <button name="Delete">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="single_product">
+                            <div class="product_thumb">
+                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
+                            </div>
+                            <div class="product_content list_content">
+                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 256G</a></h4>
+                                <div class="price_box">
+                                    <span class="current_price">$99.00</span>
+                                </div>
+                                <div class="product_desc">
+                                    这里写具体商品描述
+                                </div>
+                                <div>
+                                    <button name="Delete">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <butto>
+                            <a href="/add">添加商品</a>
+                        </butto>
+                    </div>
+                </div>
+                <!-- <div class="shop_toolbar t_bottom">
+                    <div class="pagination">
+                        <ul>
+                            <li class="current">1</li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li class="next"><a href="#">next</a></li>
+                            <li><a href="#">&gt;&gt;</a></li>
+                        </ul>
+                    </div>
+                </div> -->
+                <!--shop toolbar end-->
+                <!--shop wrapper end-->
+            </div>
+        </div>
+    </div>
 
-
-
-
-
-
-
-    </body>
+</body>
