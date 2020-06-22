@@ -2,13 +2,17 @@ from flask import *
 import sqlite3, hashlib, os
 import mysql.connector
 from werkzeug.utils import secure_filename
-
+from register import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['jpeg', 'jpg', 'png', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def link_database()
+    conn = mysql.connector.connect(user='root', password='0302', database='online_shop2', use_unicode=True,
+                                   auth_plugin='mysql_native_password')
+    return conn.cursor()
 def getLoginDetails():
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
@@ -345,7 +349,7 @@ def register():
                 cur.execute('INSERT INTO BUYER VALUES (NULL,%s,%s,%s,%s);',(name,password,email,address))
                 conn.commit()
                 msg = "Registered Successfully"
-                print("yes insert INSERT INTO BUYER VALUES (NULL,%s,%s,%s,%s);",(name,password,email,address))
+
             else:
                 #解析表单数据
                 name = request.form['name']
