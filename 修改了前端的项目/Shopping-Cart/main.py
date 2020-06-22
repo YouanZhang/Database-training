@@ -3,6 +3,7 @@ import sqlite3, hashlib, os
 import mysql.connector
 from werkzeug.utils import secure_filename
 from DAO.register import *
+from DAO.login import*
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -216,6 +217,15 @@ def loginForm():
     else:
         return render_template('login.html', error='')
 
+#测试用新数据库登录     hbc-622-20：00     
+@app.route("/test_loginForm")
+def test_loginForm():
+    if 'email' in session:
+        return redirect(url_for('root'))
+    else:
+        return render_template('new_login.html', error='')
+
+
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -227,6 +237,34 @@ def login():
         else:
             error = 'Invalid UserId / Password'
             return render_template('login.html', error=error)
+            
+#测试用新数据库登录  hbc-622-20：00          
+@app.route("/test_login", methods = ['POST', 'GET'])
+def test_login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        if request.form['is_buyer']=='True':
+            valid,data= buyer_login_info_valid(email,password)
+            if valid:
+                session['email'] = email
+                return redirect(url_for('root'))
+            else:
+                error = 'Invalid UserId / Password'
+                return render_template('login.html', error=error)
+        else:
+            print('进入shop判断')
+            valid,data= shop_login_info_valid(email,password)
+            if valid:
+                print('shop 有效')
+                session['email'] = email
+                return render_template('myshop.html')
+            else:
+                error = 'Invalid UserId / Password'
+                print('shop无效')
+                return render_template('login.html', error=error)
+
+
 
 @app.route("/productDescription")
 def productDescription():

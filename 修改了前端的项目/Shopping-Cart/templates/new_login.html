@@ -45,25 +45,30 @@
 <div class="col-lg-6 col-md-6">
     <div class="account_form">
         <h2>login</h2>
-        <form action="#">
-            <p>   
-                <label>Username or email <span>*</span></label>
-                <input type="text">
-             </p>
-             <p>   
-                <label>Passwords <span>*</span></label>
-                <input type="password">
-             </p>   
-            <div class="login_submit">
-               <a href="#">Lost your password?</a>
-                <label for="remember">
-                    <input id="remember" type="checkbox">
-                    Remember me
-                </label>
-                <button type="submit">login</button>
-                
-            </div>
-
+        <form action="/test_login" method="POST">
+			<p>   
+				<label>User email <span>*</span></label>
+				<input type="text" name="email">
+			</p>
+			<p>   
+				<label>Passwords <span>*</span></label>
+				<input type="password" name="password">
+			 </p>   
+			<select  name="is_buyer">
+		
+				<option value="True">buyer</option>
+				<option value="False">seller</option>
+			
+		     </select>
+			<div class="login_submit">
+				<a href="/registerationForm">Register here</a>
+				<label for="remember">
+					<input id="remember" type="checkbox">
+					Remember me
+				</label>
+				<button type="submit">login</button>
+				
+			</div>
         </form>
      </div>    
 </div>
