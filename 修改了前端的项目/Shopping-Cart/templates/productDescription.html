@@ -1,43 +1,86 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-<title>Product Description</title>
-<link rel="stylesheet" href={{url_for('static', filename='css/productDescription.css')}} />
-<link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css')}} />
-</head>
-<body>
-<div id="title">
-	<a href="/">
-		<img id="logo" src= {{ url_for('static', filename='images/logo.png') }} />
-	</a>
-	<form>
-		<input id="searchBox" type="text" name="searchQuery">
-		<input id="searchButton" type="submit" value="Search">
-	</form>
 
-	{% if not loggedIn %}
-	<div id="signInButton">
-		<a class="link" href="/loginForm">Sign In</a>
-	</div>
-	{% else %}
-	<div class="dropdown">
-		<button class="dropbtn">Hello, <br>{{firstName}}</button>
-		<div class="dropdown-content">
-			<a href="/account/orders">Your orders</a>
-			<a href="/account/profile">Your profile</a>
-			<hr>
-			<a href="/logout">Sign Out</a>
-		</div>
-	</div>
-	{% endif %}
-	<div id="kart">
-		<a class="link" href="/cart">
-			<img src={{url_for('static', filename='images/shoppingCart.png')}} id="cartIcon" />
-			CART {{noOfItems}}
-		</a>
-	</div>
-</div>
-<div id="display">
+<head>
+    <link rel="stylesheet" href={{url_for( 'static', filename='css/productDescription.css' )}} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' )}} />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Register</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS 
+    ========================= -->
+    <!--bootstrap min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/bootstrap.min.css" )}}>
+
+    <!--owl carousel min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/owl.carousel.min.css" )}}>
+
+    <!--slick min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/slick.css" )}}>
+
+    <!--magnific popup min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/magnific-popup.css" )}}>
+
+    <!--font awesome css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/font.awesome.css" )}}>
+
+    <!--ionicons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/ionicons.min.css" )}}>
+
+    <!--7 stroke icons css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/pe-icon-7-stroke.css" )}}>
+
+    <!--animate css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/animate.css" )}}>
+
+    <!--jquery ui min css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/jquery-ui.min.css" )}}>
+
+    <!--plugins css-->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/plugins.css" )}}>
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
+
+</head>
+
+<body>
+    <div id="title">
+        <a href="/">
+            <img id="logo" src={ { url_for( 'static' , filename='images/logo.png' ) }} />
+        </a>
+        <form>
+            <input id="searchBox" type="text" name="searchQuery">
+            <input id="searchButton" type="submit" value="Search">
+        </form>
+
+        {% if not loggedIn %}
+        <div id="signInButton">
+            <a class="link" href="/loginForm">Sign In</a>
+        </div>
+        {% else %}
+        <div class="dropdown">
+            <button class="dropbtn">Hello, <br>{{firstName}}</button>
+            <div class="dropdown-content">
+                <a href="/account/orders">Your orders</a>
+                <a href="/account/profile">Your profile</a>
+                <hr>
+                <a href="/logout">Sign Out</a>
+            </div>
+        </div>
+        {% endif %}
+        <div id="kart">
+            <a class="link" href="/cart">
+                <img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
+            </a>
+        </div>
+    </div>
+    <!-- <div id="display">
 	<div id="productName">
 		<h1>{{data[1]}}</h1>
 	</div>
@@ -67,7 +110,64 @@
 	<div id="addToCart">
 		<a href="/addToCart?productId={{request.args.get('productId')}}">Add to Cart</a>
 	</div>
-</div>
-</body>
-</html>
+</div> -->
 
+    <div class="section_bg">
+        <div class="container">
+            <!--breadcrumbs area start-->
+            <div class="breadcrumbs_area">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb_content">
+                            <ul>
+                                <li><a href="index.html">home</a></li>
+                                <li>product details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--breadcrumbs area end-->
+
+            <!--product details start-->
+            <div class="product_details mb-60">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5">
+                        <div class="product-details-tab">
+                            <div>
+                                <img src="" alt="这里放上商品图片">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7">
+                        <div class="product_d_right">
+                            <form action="#">
+                                <div class="productd_title_nav">
+                                    <h1><a href="#">商品名</a></h1>
+                                </div>
+                                <div class="price_box">
+                                    <span class="current_price">$48.00</span>
+                                </div>
+                                <div class="product_desc">
+                                    <p>eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in </p>
+                                </div>
+                                <div class="product_variant quantity">
+                                    <label>quantity</label>
+                                    <input min="1" max="100" value="1" type="number">
+                                    <button class="button" type="submit">add to cart</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--product details end-->
+
+        </div>
+    </div>
+
+</body>
+
+</html>
