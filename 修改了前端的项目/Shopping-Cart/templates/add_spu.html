@@ -70,10 +70,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb_content">
-                        <h3>Add Item</h3>
+                        <h3>Add SPU</h3>
                         <ul>
                             <li><a href="index.html">home</a></li>
-                            <li>Add Item</li>
+                            <li>Add SPU</li>
                         </ul>
                     </div>
                 </div>
@@ -90,39 +90,15 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="account_form register">
 
-                        <h2>Add items</h2>
+                        <h2>Add SPU</h2>
                         <form action="/addItem" method="POST" enctype="multipart/form-data">
                             <p>
                                 <label>Name: </label>
                                 <input type="text" name="name">
                             </p>
                             <p>
-                                <label>Price: </label>
-                                <input type="text" name="price">
-                            </p>
-                            <p>
                                 <label>Description: </label>
                                 <textarea name="description" rows=3 cols="40"></textarea>
-                            </p>
-                            <p>
-                                Image:
-                                <input type="file" name="image">
-                            </p>
-                            <p>
-                                <label>Stock: </label>
-                                <input type="text" name="stock">
-                            </p>
-                            <p>
-                                <label>Category: </label>
-                                <select name="category">
-									{% for row in categories %}
-									<option value="{{row[0]}}">{{row[1]}}</option>
-									{% endfor %}<br>
-									<!-- Test:<input type="text" name="test"><br> -->
-								</select>
-                                <div class="login_submit">
-                                    <button type="submit"> submit</button>
-                                </div>
                             </p>
                         </form>
 
