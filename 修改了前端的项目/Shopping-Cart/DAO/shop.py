@@ -1,10 +1,10 @@
-from DAO.link_database  import  *
+from DAO.link_database import *
 
 #查询用户
-def find_buyer_by_id(id):
+def find_shop_by_id(id):
     conn = link_mysql()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM BUYER WHERE `buyer_id` = %s', (id, ))
+    cur.execute('SELECT * FROM SHOP WHERE `shop_id` = %s', (id, ))
     data = cur.fetchall()
     # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
     vaild = len(data) != 0
@@ -12,10 +12,10 @@ def find_buyer_by_id(id):
     conn.close()
     return vaild, data
 
-def find_buyer_by_email(email):
+def find_shop_by_email(email):
     conn = link_mysql()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM BUYER WHERE `e_mail` = %s', (email,))
+    cur.execute('SELECT * FROM SHOP WHERE `e_mail` = %s', (email,))
     data = cur.fetchall()
     # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
     vaild = len(data) != 0
@@ -23,4 +23,4 @@ def find_buyer_by_email(email):
     conn.close()
     return vaild, data
 
-#print(find_buyer_by_id(3))
+#print(find_shop_by_email('atyj@qq.com'))
