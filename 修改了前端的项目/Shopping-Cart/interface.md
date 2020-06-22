@@ -4,6 +4,10 @@
 
 返回类型void register_shop(name, description, password,email)
 
+返回类型 vaild, buyer_id, name, address getBuyerLoginDetails(email, password)
+
+返回类型 vaild, shop_id, name, desc getShopLoginDetails(email, password)
+
 登录接口
 
 返回类型 bool,list buyer_login_info_valid(email, password)
@@ -37,3 +41,4 @@
 查询购物车
 
 返回类型 list findcart(buyer_id, sku_id)
+

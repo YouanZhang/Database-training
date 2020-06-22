@@ -22,4 +22,4 @@ def shop_login_info_valid(email, password):
     conn.close()
     return vaild, data
 
-print(shop_login_info_valid('aqing@', 'a.qq.com'))
+#print(shop_login_info_valid('yangj', 'a.qq.com'))

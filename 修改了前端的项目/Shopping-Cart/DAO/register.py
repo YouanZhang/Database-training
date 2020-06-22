@@ -25,8 +25,8 @@ def register_shop(name, description, password,email):
     conn.close()
     print('Successfully INSERT INTO SHOP VALUES (NULL,%s,%s,%s,%s);', (name, description, password, email))
 
-
-
+#register_buyer('yangjian', '123456', '754032944@qq.com', 'anqing')
+#register_shop('yangjian', 'cool', '123456', '754032944@qq.com')
 
 
 
