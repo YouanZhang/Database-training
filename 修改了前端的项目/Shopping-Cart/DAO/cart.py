@@ -18,5 +18,13 @@ def findcart(buyer_id, sku_id):
     conn.close()
     return data
 
+def findcart_by_buyerid(buyer_id):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM CART WHERE `buyer_id` = %s', (buyer_id, ))
+    data = cur.fetchall()
+    cur.close()
+    conn.close()
+    return data
 #addcart(1, 2, 1)
-#print(findcart(1, 1))
+#print(findcart_by_buyerid(1))
