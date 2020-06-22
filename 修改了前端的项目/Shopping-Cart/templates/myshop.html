@@ -118,7 +118,12 @@
                                 <li><a href="">新增</a>
                                 </li>
                                 {% for i in list1 %}
-                                <li>{{i}}</li>
+                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">{{i[0]}}</li>
+                                    {% for x in i[1] %}
+                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
+                                        <li><a href="#">{{x}}</a></li>
+                                    </ul>
+                                    {% endfor %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -164,7 +169,8 @@
                                     这里写具体商品描述
                                 </div>
                                 <div>
-                                    <button name="Delete">删除</button>
+                                    <!--如果写好了删除功能，直接传入sku_id，进行remove-->
+                                    <a href="#"> <button name="Delete">删除</button> </a>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +178,7 @@
                     <div class="col-12">
                         <butto>
                             <!-- 这里放添加sku的链接 -->
-                            <a href="">添加商品</a>
+                            <a class="account_form button" href="/test_add_sku">添加商品</a>
                         </butto>
                     </div>
                 </div>

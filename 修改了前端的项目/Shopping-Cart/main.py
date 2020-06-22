@@ -45,6 +45,15 @@ def admin():
         categories = cur.fetchall()
     conn.close()
     return render_template('add.html', categories=categories)
+#测试使用，作为进入add_spu的入口
+@app.route("/test_add_spu")
+def test_add_spu():
+    return render_template('add_spu.html')
+
+#测试使用，作为进入add_sku的入口
+@app.route("/test_add_sku")
+def test_add_sku():
+    return render_template('add_sku.html')
 
 @app.route("/addItem", methods=["GET", "POST"])
 def addItem():
@@ -380,10 +389,12 @@ def to_bool_or_none(bool_str):
 
 @app.route("/myshop")
 def myshop():
-    list1 = ['iPhone', 'xiaomi', 'huawei']
-    iPhone = ['iPhone 8', 'iPhone X']
-    xiaomi = ['xiaomi 6', 'xiaomi 8', 'xiaomi 10']
+    iphone=['7','8','x']
+    xiaomi=['6','8','10']
+    list1=[['iphone',iphone],['xiaomi',xiaomi]]
+    
     return render_template("myshop.html", list1 = list1)
+
 
 def allowed_file(filename):
     return '.' in filename and \
