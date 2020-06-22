@@ -247,7 +247,7 @@ def test_login():
         if request.form['is_buyer']=='True':
             valid,data= buyer_login_info_valid(email,password)
             if valid:
-                session['email'] = email
+                #session['email'] = email
                 return redirect(url_for('root'))
             else:
                 error = 'Invalid UserId / Password'
@@ -257,7 +257,7 @@ def test_login():
             valid,data= shop_login_info_valid(email,password)
             if valid:
                 print('shop 有效')
-                session['email'] = email
+                #session['email'] = email
                 return render_template('myshop.html')
             else:
                 error = 'Invalid UserId / Password'
@@ -377,7 +377,7 @@ def is_valid(email, password):
 def register():
     if request.method == 'POST':
         #连接数据库
-        conn = mysql.connector.connect(user='root',password='0302',database='online_shop2',use_unicode=True, auth_plugin='mysql_native_password')
+        conn = mysql.connector.connect(user='root',password='root',database='online_shop3',use_unicode=True, auth_plugin='mysql_native_password')
         try:
             cur = conn.cursor()
             #buyer注册
