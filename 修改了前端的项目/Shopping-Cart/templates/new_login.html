@@ -1,51 +1,95 @@
-<!doctype html>
-<html class="no-js" lang="en">
+<!DOCTYPE HTML>
+<html>
+
+<!-- <head>
+    <title>Edit Profile </title>
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' ) }} />
+</head> -->
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>login</title>
+    <title>login </title>
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
+    <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' ) }} />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    
+
     <!-- CSS 
     ========================= -->
     <!--bootstrap min css-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/bootstrap.min.css" )}}>
+
     <!--owl carousel min css-->
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/owl.carousel.min.css" )}}>
+
     <!--slick min css-->
-    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/slick.css" )}}>
+
     <!--magnific popup min css-->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/magnific-popup.css" )}}>
+
     <!--font awesome css-->
-    <link rel="stylesheet" href="assets/css/font.awesome.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/font.awesome.css" )}}>
+
     <!--ionicons css-->
-    <link rel="stylesheet" href="assets/css/ionicons.min.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/ionicons.min.css" )}}>
+
     <!--7 stroke icons css-->
-    <link rel="stylesheet" href="assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/pe-icon-7-stroke.css" )}}>
+
     <!--animate css-->
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/animate.css" )}}>
+
     <!--jquery ui min css-->
-    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/jquery-ui.min.css" )}}>
+
     <!--plugins css-->
-    <link rel="stylesheet" href="assets/css/plugins.css">
-    
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/plugins.css" )}}>
+
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    
+    <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
+
     <!--modernizr min js here-->
-    <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script>
+    <!-- <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script> -->
+
 
 </head>
-
 <body>
+<p> {{error}} </p>
+<div id="title">
+	<a href="/">
+		<img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
+	</a>
+	<form>
+		<input id="searchBox" type="text" name="searchQuery">
+		<input id="searchButton" type="submit" value="Search">
+	</form>
+
+	<div id="signInButton">
+		<a class="link" href="/test_loginForm">Sign In</a>
+	</div>
+
+
+	<div id="kart">
+		<a class="link" href="/cart">
+			<img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
+		</a>
+	</div>
+</div>
+
+
+
+<div class="off_canvars_overlay">
+</div>
+
 <div class="col-lg-6 col-md-6">
-    <div class="account_form">
-        <h2>login</h2>
-        <form action="/test_login" method="POST">
+	<div class="account_form">
+		<h2>login</h2>
+		<form action="/test_login" method="POST">
 			<p>   
 				<label>User email <span>*</span></label>
 				<input type="text" name="email">
@@ -69,8 +113,30 @@
 				<button type="submit">login</button>
 				
 			</div>
-        </form>
-     </div>    
+
+		</form>
+	 </div>    
 </div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!--login area start-->
+<form action="/login" method="POST">
+
+
+
+	<p>Email: <input type="text" name="email"></p>
+	<p>Password: <input type="password" name="password"></p>
+
+	<select name="用户类型">
+		
+			<option value="0">buyer</option>
+			<option value="1">seller</option>
+		
+	</select><br>
+
+	<p><input type="submit"></p>
+	<a href="/registerationForm">Register here</a>
+
+</form>
+
 </body>
+</html>

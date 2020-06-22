@@ -245,24 +245,26 @@ def test_login():
         email = request.form['email']
         password = request.form['password']
         if request.form['is_buyer']=='True':
+            print('进入buyer判断')
             valid,data= buyer_login_info_valid(email,password)
             if valid:
                 #session['email'] = email
+                print('buyer 有效')
                 return redirect(url_for('root'))
             else:
                 error = 'Invalid UserId / Password'
-                return render_template('login.html', error=error)
+                return render_template('new_login.html', error=error)
         else:
             print('进入shop判断')
             valid,data= shop_login_info_valid(email,password)
             if valid:
                 print('shop 有效')
                 #session['email'] = email
-                return render_template('myshop.html')
+                return redirect(url_for('myshop'))
             else:
                 error = 'Invalid UserId / Password'
                 print('shop无效')
-                return render_template('login.html', error=error)
+                return render_template('new_login.html', error=error)
 
 
 
