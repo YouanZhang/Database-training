@@ -54,6 +54,5 @@
 
 返回类型 bool, list findSKUbyname(name)
 
-buyer_id, sku_id, qty, sku_name, sku_desc, price, SpuID, qty, city
-
-cart_detail(buyer_id):
+返回buyer_id, sku_id, qty, sku_name, sku_desc, price, SpuID, qty, city
+ cart_detail(buyer_id):
