@@ -5,6 +5,8 @@ from werkzeug.utils import secure_filename
 from DAO.register import *
 from DAO.login import*
 from DAO.SPU import *
+from DAO.shop import*
+from DAO.buyer import*
 from Controller.login_cotrol import *
 app = Flask(__name__)
 app.secret_key = 'random string'
@@ -48,7 +50,15 @@ def root():
         else:
             return redirect(url_for('myshop'))
     else:
-        return render_template('home.html',loggedIn=loggedIn)
+        with sqlite3.connect('database.db') as conn:
+            cur = conn.cursor()
+            cur.execute('SELECT productId, name, price, description, image, stock FROM products')
+            itemData = cur.fetchall()
+            cur.execute('SELECT categoryId, name FROM categories')
+            categoryData = cur.fetchall()
+        itemData = parse(itemData)   
+        return render_template('home.html', itemData=itemData, loggedIn=loggedIn, categoryData=categoryData)
+
 
 #测试使用，作为进入add_spu的入口
 @app.route("/test_add_spu")
@@ -188,6 +198,101 @@ def myshop():
     list1=[['iphone',iphone],['xiaomi',xiaomi]]
     valid=True
     return render_template("myshop.html", list1 = list1,loggedIn=valid)
+
+
+#################以下一个函数临时的，到时候整个要重写
+@app.route("/displayCategory")
+def displayCategory():
+        loggedIn, firstName, noOfItems = getLoginDetails()
+        categoryId = request.args.get("categoryId")
+        with sqlite3.connect('database.db') as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT products.productId, products.name, products.price, products.image, categories.name FROM products, categories WHERE products.categoryId = categories.categoryId AND categories.categoryId = ?", (categoryId, ))
+            data = cur.fetchall()
+        conn.close()
+        categoryName = data[0][4]
+        data = parse(data)
+        return render_template('displayCategory.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
+@app.route("/productDescription")
+def productDescription():
+    loggedIn = test_getLoginDetails()
+    productId = request.args.get('productId')
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('SELECT productId, name, price, description, image, stock FROM products WHERE productId = ?', (productId, ))
+        productData = cur.fetchone()
+    conn.close()
+    return render_template("productDescription.html", data=productData, loggedIn = loggedIn)
+
+
+
+#账户信息
+@app.route("/account/profile")
+def profileHome():
+    if 'email' not in session:
+        return redirect(url_for('root'))
+    loggedIn= test_getLoginDetails()
+    return render_template("profileHome.html", loggedIn=loggedIn)
+    
+@app.route("/account/profile/edit")
+def editProfile():
+    if 'email' not in session:
+        return redirect(url_for('root'))
+    loggedIn= test_getLoginDetails()
+    if session['is_buyer']=='True':
+       valid,profileData= find_buyer_by_email(session['email'])
+       return render_template("editProfile_buyer.html", profileData=profileData, loggedIn=loggedIn,is_buyer=session['is_buyer'])
+    else:
+        valid,profileData=find_shop_by_email(session['email'])
+
+        return render_template("editProfile_shop.html", profileData=profileData, loggedIn=loggedIn,is_buyer=session['is_buyer'])
+
+#测试，提交修改的信息给数据库      
+@app.route("/updateProfile", methods=["GET", "POST"])
+def updateProfile():
+    if request.method == 'POST':
+        if session['is_buyer']=='True':
+            buyer_name = request.form['nick_name']
+            address = request.form['address']
+            #change_buyer_name(session['email'],buyer_name)
+            #change_buyer_address(session['email'],address)
+        else:
+            shop_name = request.form['SHOP_NAME']
+            description = request.form['DESCRIBE_WORD']
+            #change_shop_name(session['email'],shop_name)
+            #change_shop_descrip(session['email'],description)
+        print('如果添加了函数就修改成功了')
+        return redirect(url_for('root'))
+#测试，提交修改password的信息给数据库 
+@app.route("/account/profile/changePassword", methods=["GET", "POST"])
+def changePassword():
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    if request.method == "POST":
+        oldPassword = request.form['oldpassword']
+        oldPassword = hashlib.md5(oldPassword.encode()).hexdigest()
+        newPassword = request.form['newpassword']
+        newPassword = hashlib.md5(newPassword.encode()).hexdigest()
+        with sqlite3.connect('database.db') as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT userId, password FROM users WHERE email = ?", (session['email'], ))
+            userId, password = cur.fetchone()
+            if (password == oldPassword):
+                try:
+                    cur.execute("UPDATE users SET password = ? WHERE userId = ?", (newPassword, userId))
+                    conn.commit()
+                    msg="Changed successfully"
+                except:
+                    conn.rollback()
+                    msg = "Failed"
+                return render_template("changePassword.html", msg=msg)
+            else:
+                msg = "Wrong password"
+        conn.close()
+        return render_template("changePassword.html", msg=msg)
+    else:
+        return render_template("changePassword.html")
+
 
 
 

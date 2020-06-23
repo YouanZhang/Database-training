@@ -69,27 +69,17 @@
             <input id="searchButton" type="submit" value="Search">
         </form>
 
-        {% if not loggedIn %}
-        <div id="signInButton">
-            <a class="link" href="/loginForm">Sign In</a>
-        </div>
-        {% else %}
-        <div class="dropdown">
-            <button class="dropbtn">Hello, <br>{{firstName}}</button>
-            <div class="dropdown-content">
-                <a href="/account/orders">Your orders</a>
-                <a href="/account/profile">Your profile</a>
-                <hr>
-                <a href="/logout">Sign Out</a>
+            <div class="dropdown">
+                <button class="dropbtn">Hello<br>{{firstName}}</button>
+                <div class="dropdown-content">
+                   <!--your order 后面需要改成商家的订单页面-->
+                    <a href="#">Your orders</a>
+                    <a href="/account/profile">Your profile</a>
+                </div>
             </div>
-        </div>
-        {% endif %}
-        <div id="kart">
-            <a class="link" href="/cart">
-                <img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
-            </a>
-        </div>
-    </div>
+                <div id="signInButton">
+                    <a class="link" href="/logout">Sign out</a>
+                </div>
 
     <!-- <div class="display">
         <h2>Edit profile</h2>
@@ -105,9 +95,8 @@
             <p>Country: <input type="text" name="country" value={{profileData[9]}}></p>
             <p>Phone Number: <input type="text" name="phone" value={{profileData[10]}}></p>
             <input type="submit" value="Save">
-        </form>
-    </div> -->
-
+        </form>--> 
+    </div>
     <div class="off_canvars_overlay">
     </div>
 <br>
@@ -136,46 +125,17 @@
         <div class="account_form">
             <h2>Edit Profile</h2>
             <form action="/updateProfile" method="POST">
+
                 <p>
-                    <label>Email address <span>*</span></label>
-                    <input type="email" name="email" value={{profileData[1]}} readonly="readonly">
+                    <label>Shop Name <span>*</span></label>
+                    <input type="text" name="SHOP_NAME" value={{profileData[1]}}>
                 </p>
+
                 <p>
-                    <label>First Name <span>*</span></label>
-                    <input type="text" name="firstName" value={{profileData[2]}}>
+                    <label>Description <span>*</span></label>
+                    <input type="text" name="DESCRIBE_WORD" value={{profileData[2]}}>
                 </p>
-                <p>
-                    <label>Last Name <span>*</span></label>
-                    <input type="text" name="lastName" value={{profileData[3]}}>
-                </p>
-                <p>
-                    <label>Address Line 1 <span>*</span></label>
-                    <input type="text" name="address1" value={{profileData[4]}}>
-                </p>
-                <p>
-                    <label>Address Line 2 <span>*</span></label>
-                    <input type="text" name="address2" value={{profileData[5]}}>
-                </p>
-                <p>
-                    <label>Zipcode <span>*</span></label>
-                    <input type="text" name="zipcode" value={{profileData[6]}}>
-                </p>
-                <p>
-                    <label>City <span>*</span></label>
-                    <input type="text" name="city" value={{profileData[7]}}>
-                </p>
-                <p>
-                    <label>State <span>*</span></label>
-                    <input type="text" name="state" value={{profileData[8]}}>
-                </p>
-                <p>
-                    <label>Country <span>*</span></label>
-                    <input type="text" name="country" value={{profileData[9]}}>
-                </p>
-                <p>
-                    <label>Phone Number <span>*</span></label>
-                    <input type="text" name="phone" value={{profileData[10]}}>
-                </p>
+
                 <div class="login_submit">
                     <button type="submit" value="Save">Save</button>
                     <!-- <input type="submit" value="Save"> -->
