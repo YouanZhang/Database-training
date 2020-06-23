@@ -61,7 +61,7 @@
 
 <body>
     <div id="title">
-        <a href="/">
+        <a href="/myshop">
             <img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
         </a>
         <form>
@@ -69,26 +69,18 @@
             <input id="searchButton" type="submit" value="Search">
         </form>
 
-        {% if not loggedIn %}
+
         <div id="signInButton">
-            <a class="link" href="/loginForm">Sign In</a>
+            <a class="link" href="/logout">Sign out</a>
         </div>
-        {% else %}
-        <div class="dropdown">
-            <button class="dropbtn">Hello, <br>{{firstName}}</button>
-            <div class="dropdown-content">
-                <a href="/account/orders">Your orders</a>
-                <a href="/account/profile">Your profile</a>
-                <hr>
-                <a href="/logout">Sign Out</a>
-            </div>
-        </div>
-        {% endif %}
+
+        <!--
         <div id="kart">
             <a class="link" href="/cart">
                 <img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
             </a>
         </div>
+       -->
     </div>
 
     <div class="shop_area shop_reverse">

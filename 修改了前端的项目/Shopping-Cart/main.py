@@ -32,7 +32,7 @@ def root():
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute('SELECT productId, name, price, description, image, stock FROM products')
-        itemData = cur.fetchall()
+        itemData = cur.fetchall()cat
         cur.execute('SELECT categoryId, name FROM categories')
         categoryData = cur.fetchall()
     itemData = parse(itemData)   
@@ -260,7 +260,7 @@ def test_login():
             if valid:
                 print('shop 有效')
                 #session['email'] = email
-                return redirect(url_for('myshop'))
+                return redirect(url_for('myshop'),loggedIn=valid)
             else:
                 error = 'Invalid UserId / Password'
                 print('shop无效')

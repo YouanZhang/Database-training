@@ -22,7 +22,7 @@ def shop_login_info_valid(email, password):
     conn.close()
     return vaild, data
 
-def test_getLoginDetails():
+def getLoginDetails():
     conn = link_mysql()
     cur = conn.cursor()
     if 'email' not in session:
@@ -47,7 +47,7 @@ def test_getLoginDetails():
     cur.close()
     conn.close()
 
-    return (loggedIn, firstName, noOfItems)
+    return loggedIn, firstName, noOfItems
     
 
 #print(shop_login_info_valid('yangj', 'a.qq.com'))
