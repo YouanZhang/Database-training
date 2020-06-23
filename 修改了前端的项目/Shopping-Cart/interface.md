@@ -42,3 +42,6 @@
 
 返回类型 list findcart(buyer_id, sku_id)
 
+查SPU的全部信息
+返回类型 list ：  SPU_categories()
+
