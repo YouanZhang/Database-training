@@ -24,7 +24,7 @@ def test_getLoginDetails():
     else:
         if session['is_buyer']=='True':
             loggedIn = True
-            #cur.execute("SELECT BUYER_ID, Nick_Name FROM buyer WHERE E_MAIL = ?", (session['email'], ))
+            #execute("SELECT BUYER_ID, Nick_Name FROM buyer WHERE E_MAIL = ?", (session['email'], ))
             #userId, firstName = cur.fetchone()
         else:
             loggedIn = True
@@ -232,7 +232,8 @@ def profileHome():
     if 'email' not in session:
         return redirect(url_for('root'))
     loggedIn= test_getLoginDetails()
-    return render_template("profileHome.html", loggedIn=loggedIn)
+    is_buyer=session['is_buyer']
+    return render_template("profileHome.html", loggedIn=loggedIn,is_buyer=is_buyer)
     
 @app.route("/account/profile/edit")
 def editProfile():
