@@ -27,4 +27,5 @@ def findcart_by_buyerid(buyer_id):
     conn.close()
     return data
 #addcart(1, 2, 1)
+#addcart(1, 3, 1)
 #print(findcart_by_buyerid(1))
