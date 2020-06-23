@@ -22,7 +22,7 @@ def shop_login_info_valid(email, password):
     conn.close()
     return vaild, data
 
-def def test_getLoginDetails():
+def test_getLoginDetails():
     conn = link_mysql()
     cur = conn.cursor()
     if 'email' not in session:

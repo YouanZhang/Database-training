@@ -1,4 +1,4 @@
-from link_database import *
+from DAO.link_database import *
 
 #添加SPU
 def addSPU(name, desc):

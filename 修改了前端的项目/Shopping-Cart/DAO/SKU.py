@@ -1,7 +1,7 @@
 from link_database import *
 
 #添加SKU
-def addSPU(name, desc, price, SpuID, qty, city):
+def addSKU(name, desc, price, SpuID, qty, city):
     conn = link_mysql()
     cur = conn.cursor()
     cur.execute('INSERT INTO SKU VALUES (NULL, %s, %s, %s, %s, %s, %s);',(name, desc, price, SpuID, qty, city))

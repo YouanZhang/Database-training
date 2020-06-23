@@ -91,15 +91,23 @@
                     <div class="account_form register">
 
                         <h2>Add SPU</h2>
-                        <form action="/addItem" method="POST" enctype="multipart/form-data">
+                        <form action="/add_SPU" method="POST" enctype="multipart/form-data">
                             <p>
                                 <label>Name: </label>
                                 <input type="text" name="name">
                             </p>
                             <p>
                                 <label>Description: </label>
+                                
                                 <textarea name="description" rows=3 cols="40"></textarea>
                             </p>
+
+                            <select  name="categoryName">
+                                {% for row in categories %}
+                                 <option value={{row[1]}}>{{row[1]}}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">提交SPU</button>
                         </form>
 
                     </div>
