@@ -5,7 +5,7 @@ def find_shop_by_id(id):
     conn = link_mysql()
     cur = conn.cursor()
     cur.execute('SELECT * FROM SHOP WHERE `shop_id` = %s', (id, ))
-    data = cur.fetchall()
+    data = cur.fetchone()
     # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
     vaild = len(data) != 0
     cur.close()
@@ -16,7 +16,7 @@ def find_shop_by_email(email):
     conn = link_mysql()
     cur = conn.cursor()
     cur.execute('SELECT * FROM SHOP WHERE `e_mail` = %s', (email,))
-    data = cur.fetchall()
+    data = cur.fetchone()
     # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
     vaild = len(data) != 0
     cur.close()
