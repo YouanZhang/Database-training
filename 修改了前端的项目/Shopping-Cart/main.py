@@ -260,7 +260,7 @@ def test_login():
             if valid:
                 print('shop 有效')
                 #session['email'] = email
-                return redirect(url_for('myshop'))
+                return redirect(url_for('myshop'),loggedIn=valid)
             else:
                 error = 'Invalid UserId / Password'
                 print('shop无效')

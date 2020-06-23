@@ -22,36 +22,28 @@ def test_getLoginDetails():
     else:
         if session['is_buyer']=='True':
             loggedIn = True
-            cur.execute("SELECT BUYER_ID, Nick_Name FROM buyer WHERE E_MAIL = ?", (session['email'], ))
-            userId, firstName = cur.fetchone()
-            cur.execute("SELECT count(SKU_ID) FROM cart WHERE BUYER_ID = ?", (userId, ))
-            noOfItems = cur.fetchone()[0]
+            #cur.execute("SELECT BUYER_ID, Nick_Name FROM buyer WHERE E_MAIL = ?", (session['email'], ))
+            #userId, firstName = cur.fetchone()
         else:
             loggedIn = True
-            cur.execute("SELECT SHOP_ID, SHOP_Name FROM shop WHERE E_MAIL = ?", (session['email'], ))
-            userId, firstName = cur.fetchone()
-            cur.execute("SELECT WAREHOUSE_ID FROM warehouse WHERE SHOP_ID = ?", (userId, ))
-            warehouse_id=cur.fetchall()
-            cur.execute("SELECT count(SKU_ID) FROM store WHERE WAREHOUSE_ID = ?", (warehouse_id, ))
-            noOfItems = cur.fetchone()[0]
+            #cur.execute("SELECT SHOP_ID, SHOP_Name FROM shop WHERE E_MAIL = ?", (session['email'], ))
+            #userId, firstName = cur.fetchone()
+
     cur.close()
     conn.close()
-
-    return (loggedIn, firstName, noOfItems)
+    if loggedIn==True:
+        print('已经登陆了')
+    else:
+        print('登陆了')
+    return (loggedIn)
     
 
 @app.route("/")
 def root():
-    loggedIn, firstName, noOfItems = test_getLoginDetails()
+    loggedIn = test_getLoginDetails()
 #下面需要改，后期弄成自己的商品的入口    
-    with sqlite3.connect('database.db') as conn:
-        cur = conn.cursor()
-        cur.execute('SELECT productId, name, price, description, image, stock FROM products')
-        itemData = cur.fetchall()
-        cur.execute('SELECT categoryId, name FROM categories')
-        categoryData = cur.fetchall()
-    itemData = parse(itemData)   
-    return render_template('home.html', itemData=itemData, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryData=categoryData)
+
+    return render_template('home.html',loggedIn=loggedIn)
 
 #测试使用，作为进入add_spu的入口
 @app.route("/test_add_spu")
@@ -85,12 +77,37 @@ def test_add_sku():
     return render_template('add_sku.html')
 
 
+#测试使用，作为进入register页面入口
+@app.route("/registerationForm")
+def registrationForm():
+    return render_template("register.html")
 
+#测试使用，作为register连接数据库的入口
+@app.route("/test_register", methods = ['POST'])
+def register():
+    if request.method == 'POST':
+        if request.form['is_buyer']=='True':
+            name = request.form['name']
+            password = request.form['password']
+            email = request.form['email']
+            address = request.form['address']
+            register_buyer(name, password, email, address)
+            return render_template('new_login.html', error='')
+        else:
+            name = request.form['name']
+            password = request.form['password']
+            email = request.form['email']
+            address = request.form['address']
+            register_shop(name, name, password,email)
+            return render_template('new_login.html', error='')
 #测试用新数据库登录     hbc-622-20：00     
 @app.route("/test_loginForm")
 def test_loginForm():
     if 'email' in session:
-        return redirect(url_for('root'))
+        if session['is_buyer']=='True':
+            return redirect(url_for('root'))
+        else:
+            return redirect(url_for('myshop'))
     else:
         return render_template('new_login.html', error='')
 
@@ -104,7 +121,11 @@ def test_login():
             print('进入buyer判断')
             valid,data= buyer_login_info_valid(email,password)
             if valid:
-                #session['email'] = email
+                session.pop('email', None)
+                session.pop('is_buyer',None)
+                #用户部分还没有实现，优先搞定商家部份
+                session['email'] = email
+                session['is_buyer']='True'
                 print('buyer 有效')
                 return redirect(url_for('root'))
             else:
@@ -114,23 +135,45 @@ def test_login():
             print('进入shop判断')
             valid,data= shop_login_info_valid(email,password)
             if valid:
+                session.pop('email', None)
+                session.pop('is_buyer',None)
                 print('shop 有效')
                 session['email'] = email
-                session['is_buyer']='True'
+                session['is_buyer']='False'
+                #return render_template('myshop.html',loggedIn=valid)
                 return redirect(url_for('myshop'))
             else:
                 error = 'Invalid UserId / Password'
                 print('shop无效')
-                return render_template('new_login.html', error=error)
+                return render_template('new_login.html')
+
+@app.route("/logout")
+def logout():
+    session.pop('email', None)
+    session.pop('is_buyer',None)
+    return redirect(url_for('test_loginForm'))
 
 
 @app.route("/myshop")
 def myshop():
+    if 'email' not in session:
+        print('没有登录用户试图进入商家界面')
+        return render_template('new_login.html')
+    if session['is_buyer']=='True':
+        print('买家尝试进入商家界面')
+        return render_template('new_login.html')
+    print('卖家进入商家界面')
+    #下面是临时的数据，到时候需要改写，并把信息传入给page。
+    #需要SPU_list,SKU_list
     iphone=['7','8','x']
     xiaomi=['6','8','10']
     list1=[['iphone',iphone],['xiaomi',xiaomi]]
-    
-    return render_template("myshop.html", list1 = list1)
+    valid=True
+    return render_template("myshop.html", list1 = list1,loggedIn=valid)
+
+
+
+
 
 
 def parse(data):
