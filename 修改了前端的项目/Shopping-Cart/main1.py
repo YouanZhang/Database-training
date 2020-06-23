@@ -42,8 +42,13 @@ def test_getLoginDetails():
 def root():
     loggedIn = test_getLoginDetails()
 #下面需要改，后期弄成自己的商品的入口    
-
-    return render_template('home.html',loggedIn=loggedIn)
+    if loggedIn:
+        if session['is_buyer']=='True':
+            return render_template('home.html',loggedIn=loggedIn)
+        else:
+            return redirect(url_for('myshop'))
+    else:
+        return render_template('home.html',loggedIn=loggedIn)
 
 #测试使用，作为进入add_spu的入口
 @app.route("/test_add_spu")
@@ -76,6 +81,18 @@ def add_SPU():
 def test_add_sku():
     return render_template('add_sku.html')
 
+#测试使用，作为add_SKU连接数据库的入口
+@app.route("/add_SKU", methods=["GET", "POST"])
+def add_SKU():
+    if request.method == "POST":
+        name = request.form['name']
+        description = request.form['description']
+        #这里还要添加SPU所属的class，等接口实现了加上
+        addSPU(name, description)
+        return redirect(url_for('myshop'))
+        
+
+
 
 #测试使用，作为进入register页面入口
 @app.route("/registerationForm")
@@ -100,6 +117,7 @@ def register():
             address = request.form['address']
             register_shop(name, name, password,email)
             return render_template('new_login.html', error='')
+
 #测试用新数据库登录     hbc-622-20：00     
 @app.route("/test_loginForm")
 def test_loginForm():
@@ -170,6 +188,10 @@ def myshop():
     list1=[['iphone',iphone],['xiaomi',xiaomi]]
     valid=True
     return render_template("myshop.html", list1 = list1,loggedIn=valid)
+
+
+
+
 
 
 
