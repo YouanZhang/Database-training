@@ -26,6 +26,18 @@ def findcart_by_buyerid(buyer_id):
     cur.close()
     conn.close()
     return data
+
+def modify_cart(buyer_id, sku_id, qty):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('UPDATE CART SET `QTY`=%s WHERE `buyer_id` = %s AND `sku_id` = %s;', (qty, buyer_id, sku_id))
+    #cur.execute('SELECT * FROM CART WHERE `buyer_id` = %s AND `sku_id` = %s;', (buyer_id, sku_id))
+    #print(cur.fetchall())
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('UPDATE CART SET `QTY`=%S WHERE `buyer_id` = %s `sku_id` = %s', (qty, buyer_id, sku_id))
 #addcart(1, 2, 1)
 #addcart(1, 3, 1)
+#modify_cart(1, 2, 20)
 #print(findcart_by_buyerid(1))
