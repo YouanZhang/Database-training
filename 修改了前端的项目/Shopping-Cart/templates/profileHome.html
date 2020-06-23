@@ -21,13 +21,17 @@
 	</div>
 	{% else %}
 	<div class="dropdown">
-		<button class="dropbtn">Hello, <br>{{firstName}}</button>
+		<button class="dropbtn">Hello <br>{{firstName}}</button>
 		<div class="dropdown-content">
+			{% if is_buyer=='is_buyer' %}
 			<a href="/account/orders">Your orders</a>
 			<a href="/account/profile">Your profile</a>
-			<a href="/myshop">My shop</a>
 			<hr>
 			<a href="/logout">Sign Out</a>
+			{% else %}
+			<a href="/myshop">Your shop</a>
+			<a href="/account/profile">Your profile</a>
+			{% endif %}
 		</div>
 	</div>
 	{% endif %}
