@@ -268,6 +268,7 @@ def updateProfile():
             change_shop_descrip(session['email'],description)
         print('如果添加了函数就修改成功了')
         return redirect(url_for('root'))
+
 #测试，提交修改password的信息给数据库 
 @app.route("/account/profile/changePassword", methods=["GET", "POST"])
 def changePassword():
@@ -275,26 +276,46 @@ def changePassword():
         return redirect(url_for('test_loginForm'))
     if request.method == "POST":
         oldPassword = request.form['oldpassword']
-        oldPassword = hashlib.md5(oldPassword.encode()).hexdigest()
+        #oldPassword = hashlib.md5(oldPassword.encode()).hexdigest()
         newPassword = request.form['newpassword']
-        newPassword = hashlib.md5(newPassword.encode()).hexdigest()
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT userId, password FROM users WHERE email = ?", (session['email'], ))
-            userId, password = cur.fetchone()
-            if (password == oldPassword):
-                try:
-                    cur.execute("UPDATE users SET password = ? WHERE userId = ?", (newPassword, userId))
-                    conn.commit()
-                    msg="Changed successfully"
-                except:
-                    conn.rollback()
-                    msg = "Failed"
-                return render_template("changePassword.html", msg=msg)
+        cpassword=request.form['cpassword']
+        #newPassword = hashlib.md5(newPassword.encode()).hexdigest()
+        print("尝试修改密码")
+        not_vaild = len(oldPassword) == 0
+        if not_vaild:
+            msg="输入不能为空"
+            return render_template("changePassword.html", msg=msg)
+        not_vaild = len(newPassword) == 0
+        if not_vaild:
+            msg="输入不能为空"
+            return render_template("changePassword.html", msg=msg) 
+              
+        if (newPassword == cpassword):
+            if session['is_buyer']=='True':
+                print("buyer尝试修改密码")
+                NULL,data=find_buyer_by_email(session['email'])
+                password = data[0][2]
+                if password==oldPassword:
+                    change_buyer_password(session['email'],newPassword)
+                    msg="success"
+                    return render_template("changePassword.html", msg=msg)
+                else:
+                    msg="输入的旧密码不正确"
+                    return render_template("changePassword.html", msg=msg)
             else:
-                msg = "Wrong password"
-        conn.close()
-        return render_template("changePassword.html", msg=msg)
+                print("shop尝试修改密码")
+                NULL,data=find_shop_by_email(session['email'])
+                password = data[0][3]
+                if password==oldPassword:
+                    change_shop_password(session['email'],newPassword)
+                    msg="success"
+                    return render_template("changePassword.html", msg=msg)
+                else:
+                    msg="输入的旧密码不正确"
+                    return render_template("changePassword.html", msg=msg)
+        else:
+            msg="两次输入密码不相同"
+            return render_template("changePassword.html", msg=msg)       
     else:
         return render_template("changePassword.html")
 

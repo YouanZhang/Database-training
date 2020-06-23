@@ -1,5 +1,5 @@
 function validate() {
-    var pass = document.getElementById("password").value;
+    var pass = document.getElementById("newpassword").value;
     var cpass = document.getElementById("cpassword").value;
     if (pass == cpass) {
         return true;
