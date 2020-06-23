@@ -35,12 +35,18 @@
 		</div>
 	</div>
 	{% endif %}
+	{% if is_buyer=='is_buyer' %}
 	<div id="kart">
 		<a class="link" href="/cart">
 			<img src={{url_for('static', filename='images/shoppingCart.png')}} id="cartIcon" />
 			CART {{noOfItems}}
 		</a>
 	</div>
+		{% else %}
+		<div id="signInButton">
+            <a class="link" href="/logout">Sign out</a>
+        </div>
+		{% endif %}
 </div>
 
 <div class="display">

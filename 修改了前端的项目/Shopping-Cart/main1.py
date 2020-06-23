@@ -8,6 +8,8 @@ from DAO.SPU import *
 from DAO.shop import*
 from DAO.buyer import*
 from Controller.login_cotrol import *
+from Controller.shop_control import *
+from Controller.buyer_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -241,10 +243,12 @@ def editProfile():
         return redirect(url_for('root'))
     loggedIn= test_getLoginDetails()
     if session['is_buyer']=='True':
-       valid,profileData= find_buyer_by_email(session['email'])
+       valid,profileDatas= find_buyer_by_email(session['email'])
+       profileData=profileDatas[0]
        return render_template("editProfile_buyer.html", profileData=profileData, loggedIn=loggedIn,is_buyer=session['is_buyer'])
     else:
-        valid,profileData=find_shop_by_email(session['email'])
+        valid,profileDatas=find_shop_by_email(session['email'])
+        profileData=profileDatas[0]  
 
         return render_template("editProfile_shop.html", profileData=profileData, loggedIn=loggedIn,is_buyer=session['is_buyer'])
 
@@ -255,13 +259,13 @@ def updateProfile():
         if session['is_buyer']=='True':
             buyer_name = request.form['nick_name']
             address = request.form['address']
-            #change_buyer_name(session['email'],buyer_name)
-            #change_buyer_address(session['email'],address)
+            change_buyer_name(session['email'],buyer_name)
+            change_buyer_address(session['email'],address)
         else:
             shop_name = request.form['SHOP_NAME']
             description = request.form['DESCRIBE_WORD']
-            #change_shop_name(session['email'],shop_name)
-            #change_shop_descrip(session['email'],description)
+            change_shop_name(session['email'],shop_name)
+            change_shop_descrip(session['email'],description)
         print('如果添加了函数就修改成功了')
         return redirect(url_for('root'))
 #测试，提交修改password的信息给数据库 
