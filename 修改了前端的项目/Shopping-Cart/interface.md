@@ -42,6 +42,14 @@
 
 返回类型 list findcart(buyer_id, sku_id)
 
-查SPU的全部信息
-返回类型 list ：  SPU_categories()
+查询SPU
 
+返回类型 bool, list findSPUbyid(id)
+
+返回类型 bool, list findSPUbyname(name)
+
+查询SKU
+
+返回类型 bool, list findSKUbyid(id)
+
+返回类型 bool, list findSKUbyname(name)
