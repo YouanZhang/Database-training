@@ -1,5 +1,5 @@
 from DAO.link_database import *
-#还没写
+
 def getNameIdFromSecondClass():
     conn = link_mysql()
     cur = conn.cursor()
