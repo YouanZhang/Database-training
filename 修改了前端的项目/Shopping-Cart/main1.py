@@ -108,15 +108,16 @@ def add_SKU():
         #Uploading image procedure
         image = request.files['image']
         if image and allowed_file(image.filename):
-            filename = secure_filename(image.filename)
+            filename = image.filename
+            ext=filename.rsplit('.')[1]
             unix_time = int(time.time())
-            filename=str(unix_time)  # 修改了上传的文件名
+            filename=str(unix_time)+'.'+ext  # 修改了上传的文件名
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         imagename = filename
         print("SPU_id is %s" %SPU_Id)
         city='default'
         #上传SKU至数据库
-        addSKUbyemail(name, description, price, SPU_Id, stock, city, session['email'])
+        addSKUbyemail(name, description, price, SPU_Id, stock, imagename, session['email'])
         #addSKUbyemail(name, desc, price, SpuID, qty, city, email):
         return redirect(url_for('myshop',SPU_Id=SPU_Id))
         

@@ -57,6 +57,7 @@
     <script src="{{ url_for( 'static', filename='assets/js/vendor/modernizr-3.7.1.min.js' )}}"></script>
 
 
+
 </head>
 
 <body>
@@ -137,7 +138,15 @@
                     <div class="col-12">
                         <div class="single_product">
                             <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
+                                
+	
+
+
+                               <!--<a  href="product-details.html">-->
+                                    <div>
+                                    <img  src={{ url_for('static', filename='uploads/' + i[6]) }} width="200" alt="这里放图片，还有商品详情的链接"> 
+                                    </div>
+                                <!--</a>-->
                             </div>
                             <div class="product_content list_content">
                                 <h4 class="product_name"><a href="product-details.html">{{i[1]}}</a></h4>
