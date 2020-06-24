@@ -58,4 +58,4 @@ def findSKUbyShopandSPU(shop_id, spu_id):
 #addSKU('华为P40Pro 8GB+256GB 零度白','华为P40Pro，5G协议，存储量256GB, 白色', 6488, 3)
 #addSKU('华为P40Pro 8GB+128GB 零度白','华为P40Pro，5G协议，存储量128GB, 白色', 5988, 3)
 #print(findSKUbyShopandSPU(1, 3))
-remove_SKU(3)
+#remove_SKU(3)
