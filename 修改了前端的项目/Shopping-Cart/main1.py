@@ -203,17 +203,24 @@ def myshop():
         print('买家尝试进入商家界面')
         return render_template('new_login.html')
     print('卖家进入商家界面')
-    #下面是临时的数据，到时候需要改写，并把信息传入给page。
-    #需要SPU_list,SKU_list
-    #iphone=['7','8','x']
-    #xiaomi=['6','8','10']
-    #list1=[['iphone',iphone],['xiaomi',xiaomi]]
+
     list1=getLeftList()
     valid=True
-    #要根据输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
-    
+    SPU_Id = request.args.get('SPU_Id')
+    if SPU_Id==None:
+        #print('传入myshop的SPU为空')
+        return render_template("myshop.html", list1 = list1,loggedIn=valid)
+    SPU_Id = int(SPU_Id)
+    #print('传入myshop的SPU不为空')
+    #要根据调用函数时输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
+    SKU_LIST=getRightList(session['email'],SPU_Id)
+    iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
+    iphone_2=['1','iphone8p;128g;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    iphone_3=['1','iphone8p;64;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    list2=[iphone_1,iphone_2,iphone_3]
+
     #下面也需要修改，传入的数据包括，SPU_list(id,name),sku_list,loggedIn,SPU_ID
-    return render_template("myshop.html", list1 = list1,loggedIn=valid)
+    return render_template("myshop.html", list1 = list1,list2=SKU_LIST,loggedIn=valid,SPU_Id=SPU_Id)
 
 
 #################以下一个函数临时的，到时候整个要重写
