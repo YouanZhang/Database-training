@@ -122,6 +122,13 @@ def add_SKU():
         return redirect(url_for('myshop',SPU_Id=SPU_Id))
         
 
+#测试使用，作为remove_SKU连接数据库的入口
+@app.route("/remove_SKU/")
+def remove_SKU():
+    SPU_Id = int(request.args.get('SPU_Id'))
+    #调用函数删除SKU(SKU_ID)
+    
+    return redirect(url_for('myshop',SPU_Id=SPU_Id))
 
 
 #测试使用，作为进入register页面入口

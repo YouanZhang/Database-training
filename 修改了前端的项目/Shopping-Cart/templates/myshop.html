@@ -138,10 +138,6 @@
                     <div class="col-12">
                         <div class="single_product">
                             <div class="product_thumb">
-                                
-	
-
-
                                <!--<a  href="product-details.html">-->
                                     <div>
                                     <img  src={{ url_for('static', filename='uploads/' + i[6]) }} width="200" alt="这里放图片，还有商品详情的链接"> 
@@ -158,7 +154,11 @@
                                 </div>
                                 <div>
                                     <!--如果写好了删除功能，直接传入sku_id，进行remove-->
-                                    <a href="#"> <button name="Delete">删除</button> </a>
+                                    <!--<a href="#"> <button name="Delete">删除</button> </a>-->
+                                    <butto>
+                                        <!-- 这里放添加sku的链接 -->
+                                        <a class="account_form button" href="/remove_SKU?SKU_Id={{i[0]}}&SPU_Id={{SPU_Id}}">删除</a>
+                                    </butto>
                                 </div>
                             </div>
                         </div>
