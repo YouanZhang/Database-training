@@ -99,30 +99,22 @@
                         <div class="widget_list widget_categories">
                             <!-- 这里放spu -->
                             <ul>
-                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">iPhone</a>
-                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
-                                        <li><a href="#">iPhone 7</a></li>
-                                        <li><a href="#">iPhone 8</a></li>
-                                        <li><a href="#">iPhone X</a></li>
-                                    </ul>
-                                </li>
-                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">小米</a>
-                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
-                                        <li><a href="#">小米 6</a></li>
-                                        <li><a href="#">小米 8</a></li>
-                                        <li><a href="#">小米 10</a></li>
-                                    </ul>
-                                </li>
+                                <div class="col-12">
+                                    <butto>
+                                        <!-- 这里放添加sku的链接 -->
+                                        <a class="account_form button" href="/test_add_spu">添加SPU</a>
+                                    </butto>
+                                </div>
                                 <!-- 这里写新增spu的链接 -->
-                                <li><a href="/test_add_spu">新增</a>
-                                </li>
+
                                 {% for i in list1 %}
-                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">{{i[0]}}</li>
+                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">{{i[0][1]}}</a>
                                     {% for x in i[1] %}
                                     <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
-                                        <li><a href="#">{{x}}</a></li>
+                                        <li><a href="/myshop?SPU_Id={{x[0]}}">{{x[1]}}</a></li>
                                     </ul>
                                     {% endfor %}
+                                </li>
                                 {% endfor %}
                             </ul>
                         </div>

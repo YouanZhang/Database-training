@@ -7,9 +7,11 @@ from DAO.login import*
 from DAO.SPU import *
 from DAO.shop import*
 from DAO.buyer import*
+from DAO.second_class import *
 from Controller.login_cotrol import *
 from Controller.shop_control import *
 from Controller.buyer_control import *
+from Controller.class_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -69,11 +71,7 @@ def test_add_spu():
         return redirect(url_for('test_loginForm'))
     else:
         #下面部份需要重新写的，等获取SPU_catgories搞定，就传入我们自己的SPU_catgories
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT categoryId, name FROM categories")
-            categories = cur.fetchall()
-        conn.close()
+        categories=getNameIdFromSecondClass()
         return render_template('add_spu.html',categories=categories)
 
 #测试使用，作为add_SPU连接数据库的入口
@@ -82,16 +80,16 @@ def add_SPU():
     if request.method == "POST":
         name = request.form['name']
         description = request.form['description']
-        #还需要接受CLASS_id class_id=request.form['class_id']
-        #这里还要添加SPU所属的class，等接口实现了加上
-        addSPU(name, description)
-        return redirect(url_for('myshop'))
+        class_id=int(request.form['categoryName'])
+        addSPU(name, description,class_id)
+        return render_template('myshop.html')
         
 
 
 #测试使用，作为进入add_sku的入口
 @app.route("/test_add_sku")
 def test_add_sku():
+    #以下还需要传入SPU_id
     return render_template('add_sku.html')
 
 #测试使用，作为add_SKU连接数据库的入口
@@ -99,8 +97,19 @@ def test_add_sku():
 def add_SKU():
     if request.method == "POST":
         name = request.form['name']
+        price = request.form['price']
         description = request.form['description']
-        #这里还要添加SPU所属的class，等接口实现了加上
+        stock = int(request.form['stock'])
+        #下面其实需要导入SPU_ID，再从session的email找到shop_id
+        #categoryId = int(request.form['category'])
+
+        #Uploading image procedure
+        image = request.files['image']
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        imagename = filename
+        
         addSPU(name, description)
         return redirect(url_for('myshop'))
         
@@ -196,10 +205,13 @@ def myshop():
     print('卖家进入商家界面')
     #下面是临时的数据，到时候需要改写，并把信息传入给page。
     #需要SPU_list,SKU_list
-    iphone=['7','8','x']
-    xiaomi=['6','8','10']
-    list1=[['iphone',iphone],['xiaomi',xiaomi]]
+    #iphone=['7','8','x']
+    #xiaomi=['6','8','10']
+    #list1=[['iphone',iphone],['xiaomi',xiaomi]]
+    list1=getLeftList()
     valid=True
+    #要根据输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
+    
     #下面也需要修改，传入的数据包括，SPU_list(id,name),sku_list,loggedIn,SPU_ID
     return render_template("myshop.html", list1 = list1,loggedIn=valid)
 
