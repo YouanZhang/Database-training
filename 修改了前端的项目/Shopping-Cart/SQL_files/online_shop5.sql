@@ -144,7 +144,7 @@ DROP TABLE IF EXISTS `PARENT_ORDER`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `PARENT_ORDER` (
-  `PARENT_ORDER_ID` int NOT NULL,
+  `PARENT_ORDER_ID` int NOT NULL AUTO_INCREMENT,
   `BUYER_ID` int DEFAULT NULL,
   `BUYTIME` datetime DEFAULT NULL,
   `STATUS_ORDER` varchar(20) DEFAULT NULL,
@@ -301,7 +301,7 @@ DROP TABLE IF EXISTS `SUB_ORDER`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `SUB_ORDER` (
   `PARENT_ORDER_ID` int NOT NULL,
-  `SUB_ORDER_ID` int NOT NULL,
+  `SUB_ORDER_ID` int NOT NULL AUTO_INCREMENT,
   `SKU_ID` int DEFAULT NULL,
   `QTY` int DEFAULT NULL,
   `SHOP_ID` int DEFAULT NULL,
