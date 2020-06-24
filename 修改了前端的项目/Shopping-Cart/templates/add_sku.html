@@ -92,6 +92,7 @@
 
                         <h2>Add SKU</h2>
                         <form action="/add_SKU" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="SPU_Id" value="{{SPU_Id}}">
                             <p>
                                 <label>Name: </label>
                                 <input type="text" name="name">

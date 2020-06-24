@@ -1,10 +1,12 @@
 from flask import *
 import sqlite3, hashlib, os
 import mysql.connector
+import time
 from werkzeug.utils import secure_filename
 from DAO.register import *
 from DAO.login import*
 from DAO.SPU import *
+from DAO.SKU import *
 from DAO.shop import*
 from DAO.buyer import*
 from DAO.second_class import *
@@ -12,6 +14,7 @@ from Controller.login_cotrol import *
 from Controller.shop_control import *
 from Controller.buyer_control import *
 from Controller.class_control import *
+from Controller.sku_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -70,7 +73,7 @@ def test_add_spu():
     if 'email' not in session:
         return redirect(url_for('test_loginForm'))
     else:
-        #下面部份需要重新写的，等获取SPU_catgories搞定，就传入我们自己的SPU_catgories
+
         categories=getNameIdFromSecondClass()
         return render_template('add_spu.html',categories=categories)
 
@@ -82,7 +85,7 @@ def add_SPU():
         description = request.form['description']
         class_id=int(request.form['categoryName'])
         addSPU(name, description,class_id)
-        return render_template('myshop.html')
+        return redirect(url_for('myshop',SPU_Id=-1))
         
 
 
@@ -90,7 +93,8 @@ def add_SPU():
 @app.route("/test_add_sku")
 def test_add_sku():
     #以下还需要传入SPU_id
-    return render_template('add_sku.html')
+    SPU_Id = request.args.get('SPU_Id')
+    return render_template('add_sku.html',SPU_Id=SPU_Id)
 
 #测试使用，作为add_SKU连接数据库的入口
 @app.route("/add_SKU", methods=["GET", "POST"])
@@ -100,18 +104,21 @@ def add_SKU():
         price = request.form['price']
         description = request.form['description']
         stock = int(request.form['stock'])
-        #下面其实需要导入SPU_ID，再从session的email找到shop_id
-        #categoryId = int(request.form['category'])
-
+        SPU_Id = request.form['SPU_Id']
         #Uploading image procedure
         image = request.files['image']
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
+            unix_time = int(time.time())
+            filename=str(unix_time)  # 修改了上传的文件名
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         imagename = filename
-        
-        addSPU(name, description)
-        return redirect(url_for('myshop'))
+        print("SPU_id is %s" %SPU_Id)
+        city='default'
+        #上传SKU至数据库
+        addSKUbyemail(name, description, price, SPU_Id, stock, city, session['email'])
+        #addSKUbyemail(name, desc, price, SpuID, qty, city, email):
+        return redirect(url_for('myshop',SPU_Id=SPU_Id))
         
 
 
@@ -194,7 +201,7 @@ def logout():
     return redirect(url_for('test_loginForm'))
 
 
-@app.route("/myshop")
+@app.route("/myshop/")
 def myshop():
     if 'email' not in session:
         print('没有登录用户试图进入商家界面')
@@ -209,9 +216,9 @@ def myshop():
     SPU_Id = request.args.get('SPU_Id')
     if SPU_Id==None:
         #print('传入myshop的SPU为空')
-        return render_template("myshop.html", list1 = list1,loggedIn=valid)
+        return render_template("myshop.html", list1 = list1,loggedIn=valid,SPU_Id=-1)
     SPU_Id = int(SPU_Id)
-    #print('传入myshop的SPU不为空')
+    print('传入myshop的SPU不为空')
     #要根据调用函数时输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
     SKU_LIST=getRightList(session['email'],SPU_Id)
     iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
@@ -347,6 +354,9 @@ def changePassword():
 
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 
