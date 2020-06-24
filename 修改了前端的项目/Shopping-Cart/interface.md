@@ -56,3 +56,6 @@
 
 返回buyer_id, sku_id, qty, sku_name, sku_desc, price, SpuID, qty, city
  cart_detail(buyer_id):
+ 
+ 添加SKU addSKU(name, desc, price, SpuID, qty, city, shop_id)
+ 添加SPU addSPU(name, desc, second_class_id)
