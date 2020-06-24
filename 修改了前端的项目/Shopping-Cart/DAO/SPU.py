@@ -33,6 +33,17 @@ def findSPUbyname(name):
     cur.close()
     conn.close()
     return vaild, data
+
+def findSPUbySecondClassId(second_class_id):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM SPU WHERE `second_class_id` = %s', (second_class_id,))
+    data = cur.fetchall()
+    # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
+    cur.close()
+    conn.close()
+    return data
+
 #addSPU('Huawei P40 Pro','华为P40Pro手机，全网通，4G/5G', 9)
-#addSPU('Huawei P40','华为P40手机，全网通，4G/5G')
-#print(findSPUbyid(2))
+#addSPU('Huawei P20','华为P40手机，全网通，4G/5G', 9)
+#print(findSPUbySecondClassId(9))
