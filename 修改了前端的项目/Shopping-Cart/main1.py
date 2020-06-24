@@ -101,7 +101,7 @@ def test_add_sku():
 def add_SKU():
     if request.method == "POST":
         name = request.form['name']
-        price = request.form['price']
+        price = float(request.form['price'])
         description = request.form['description']
         stock = int(request.form['stock'])
         SPU_Id = request.form['SPU_Id']
@@ -124,10 +124,11 @@ def add_SKU():
 
 #测试使用，作为remove_SKU连接数据库的入口
 @app.route("/remove_SKU/")
-def remove_SKU():
+def t_remove_SKU():
     SPU_Id = int(request.args.get('SPU_Id'))
+    SKU_Id = int(request.args.get('SKU_Id'))
     #调用函数删除SKU(SKU_ID)
-    
+    remove_SKU(SKU_Id)
     return redirect(url_for('myshop',SPU_Id=SPU_Id))
 
 
