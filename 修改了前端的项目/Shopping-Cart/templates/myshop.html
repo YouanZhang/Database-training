@@ -101,11 +101,10 @@
                             <ul>
                                 <div class="col-12">
                                     <butto>
-                                        <!-- 这里放添加sku的链接 -->
+                                        <!-- 这里放添加spu的链接 -->
                                         <a class="account_form button" href="/test_add_spu">添加SPU</a>
                                     </butto>
                                 </div>
-                                <!-- 这里写新增spu的链接 -->
 
                                 {% for i in list1 %}
                                 <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">{{i[0][1]}}</a>
@@ -126,38 +125,21 @@
                 <!--shop wrapper start-->
 
                 <div class="row shop_wrapper grid_list">
+
                     <!-- 这里放sku -->
+                    {% for i in list2 %}
                     <div class="col-12">
                         <div class="single_product">
                             <div class="product_thumb">
                                 <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
                             </div>
                             <div class="product_content list_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
+                                <h4 class="product_name"><a href="product-details.html">{{i[1]}}</a></h4>
                                 <div class="price_box">
-                                    <span class="current_price">$79.00</span>
+                                    <span class="current_price">￥{{i[3]}}</span>
                                 </div>
                                 <div class="product_desc">
-                                    这里写具体商品描述
-                                </div>
-                                <div>
-                                    <button name="Delete">删除</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="single_product">
-                            <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
-                            </div>
-                            <div class="product_content list_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 256G</a></h4>
-                                <div class="price_box">
-                                    <span class="current_price">$99.00</span>
-                                </div>
-                                <div class="product_desc">
-                                    这里写具体商品描述
+                                    {{i[2]}}
                                 </div>
                                 <div>
                                     <!--如果写好了删除功能，直接传入sku_id，进行remove-->
@@ -166,6 +148,9 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+
+
                     <div class="col-12">
                         <butto>
                             <!-- 这里放添加sku的链接 -->
