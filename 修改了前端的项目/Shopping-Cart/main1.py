@@ -82,6 +82,7 @@ def add_SPU():
     if request.method == "POST":
         name = request.form['name']
         description = request.form['description']
+        #还需要接受CLASS_id class_id=request.form['class_id']
         #这里还要添加SPU所属的class，等接口实现了加上
         addSPU(name, description)
         return redirect(url_for('myshop'))
@@ -199,6 +200,7 @@ def myshop():
     xiaomi=['6','8','10']
     list1=[['iphone',iphone],['xiaomi',xiaomi]]
     valid=True
+    #下面也需要修改，传入的数据包括，SPU_list(id,name),sku_list,loggedIn,SPU_ID
     return render_template("myshop.html", list1 = list1,loggedIn=valid)
 
 
