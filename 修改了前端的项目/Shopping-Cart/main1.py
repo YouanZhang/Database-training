@@ -389,12 +389,17 @@ def changePassword():
 #测试，进入详情页面
 @app.route("/show_productDescription")
 def show_productDescription():
+    if 'email' in session:
+        print('已经登录了')
+        if session['is_buyer']!='True':
+            print('还是卖家')
+            return redirect(url_for('myshop'))
     #此函数会接受SKU_id
     SKU_Id = request.args.get('SKU_Id')
     #SKU_Id=10
     if SKU_Id==None:
         #测试使用的，用于进入详情
-        SKU_Id=10
+        return redirect(url_for('myshop'))
     #获取当前sku-id的详细信息
     valid, datas=findSKUbyid(SKU_Id)
     if valid:
