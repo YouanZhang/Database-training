@@ -21,6 +21,20 @@ def remove_SKU(sku_id):
     conn.close()
     #print('DELETE FROM SKU WHERE `sku_id` = %s;', (sku_id, ))
 
+#修改SKU qty
+def edit_SKU_QTY(sku_id, qty):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('UPDATE SKU SET `qty` =%s \
+        WHERE `sku_id` = %s;', (qty, sku_id))
+    # cur.execute('SELECT * FROM CART WHERE `buyer_id` = %s AND `sku_id` = %s;', (buyer_id, sku_id))
+    # print(cur.fetchall())
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('UPDATE SKU SET `qty` =%s \
+        WHERE `sku_id` = %s;', (qty, sku_id))
+
 #修改SKU
 def edit_SKU_by_SKUID(sku_id, name, desc, price,  qty):
     conn = link_mysql()
@@ -74,3 +88,4 @@ def findSKUbyShopandSPU(shop_id, spu_id):
 #print(findSKUbyShopandSPU(1, 3))
 #remove_SKU(3)
 #edit_SKU_by_SKUID(1, '小米9', '协议', 3999, 3)
+#edit_SKU_QTY(1, 100)

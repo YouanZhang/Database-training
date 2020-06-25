@@ -13,7 +13,7 @@ def addNewOrder(buyer_id, dt, status, address):
     cur.close()
     conn.close()
     print('INSERT INTO PARENT_ORDER VALUES (NULL, %s, %s, %s, %s);',\
-                (buyer_id, datetime, status, address))
+                (buyer_id, dt, status, address))
     #print(data)
     return data[0][0]
 
