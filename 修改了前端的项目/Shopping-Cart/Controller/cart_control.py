@@ -11,4 +11,4 @@ def cart_detail(buyer_id):
         #print(data[i])
     return data
 
-print(cart_detail(1))
+#print(cart_detail(1))
