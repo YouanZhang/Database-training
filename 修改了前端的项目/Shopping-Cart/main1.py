@@ -462,6 +462,7 @@ def remove_one_cart():
     Buyer_Id=buyer_data[0][0]
     SKU_Id = int(request.args.get('SKU_Id'))
     #remove_one_cart(SKU_Id,Buyer_Id)
+    removecart(Buyer_Id, SKU_Id)
     print("删除的的SKU_Id是%s" %(SKU_Id))
     return redirect(url_for('cart'))
 
