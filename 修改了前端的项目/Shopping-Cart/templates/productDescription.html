@@ -6,7 +6,7 @@
     <link rel="stylesheet" href={{ url_for( 'static', filename='css/topStyle.css' )}} />
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Register</title>
+    <title>商品详情</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -61,11 +61,11 @@
 
         {% if not loggedIn %}
         <div id="signInButton">
-            <a class="link" href="/loginForm">Sign In</a>
+            <a class="link" href="/test_loginForm">Sign In</a>
         </div>
         {% else %}
         <div class="dropdown">
-            <button class="dropbtn">Hello, <br>{{firstName}}</button>
+            <button class="dropbtn">Hello <br></button>
             <div class="dropdown-content">
                 <a href="/account/orders">Your orders</a>
                 <a href="/account/profile">Your profile</a>
@@ -80,38 +80,8 @@
             </a>
         </div>
     </div>
-    <!-- <div id="display">
-	<div id="productName">
-		<h1>{{data[1]}}</h1>
-	</div>
-	<div>
-		<img src={{url_for('static', filename='uploads/'+data[4]) }} id="productImage"/>
-	</div>
 
-	<div id="productDescription">
-		<h2>Details</h2>
-		<table id="descriptionTable">
-			<tr>
-				<td>Name</td>
-				<td>{{data[1]}}</td>
-			</tr>
-			<tr>
-				<td>Price</td>
-				<td>${{data[2]}}</td>
-			</tr>
-			<tr>
-				<td>Stock</td>
-				<td>{{data[5]}}</td>
-			</tr>
-		</table>
-		<h2>Description</h2>
-		<p>{{data[3]}}</p>
-	</div>
-	<div id="addToCart">
-		<a href="/addToCart?productId={{request.args.get('productId')}}">Add to Cart</a>
-	</div>
-</div> -->
-
+<br><br><br><br><br><br>
     <div class="section_bg">
         <div class="container">
             <!--breadcrumbs area start-->
@@ -120,7 +90,7 @@
                     <div class="col-12">
                         <div class="breadcrumb_content">
                             <ul>
-                                <li><a href="index.html">home</a></li>
+                                <li><a href="/">home</a></li>
                                 <li>product details</li>
                             </ul>
                         </div>
@@ -135,29 +105,31 @@
                     <div class="col-lg-5 col-md-5">
                         <div class="product-details-tab">
                             <div>
-                                <img src="" alt="这里放上商品图片">
+                                <img src={{ url_for('static', filename='uploads/' + data[6]) }}  width="300" alt="这里放上商品图片">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="product_d_right">
-                            <form action="#">
-                                <div class="productd_title_nav">
-                                    <h1><a href="#">商品名</a></h1>
-                                </div>
-                                <div class="price_box">
-                                    <span class="current_price">$48.00</span>
-                                </div>
-                                <div class="product_desc">
-                                    <p>eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                        elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in </p>
-                                </div>
-                                <div class="product_variant quantity">
+                            
+                            <div class="productd_title_nav">
+                                <h1>{{data[1]}} </h1>
+                            </div>
+                            <div class="price_box">
+                                <span class="current_price">￥： {{data[3]}}</span>
+                            </div>
+                            <div class="product_desc">
+                                <p>  &nbsp;&nbsp;{{data[2]}} </p>
+                            </div>
+
+                            <div class="product_variant quantity">
+                                <form action="/addToCart" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="SKU_Id" value="{{data[0]}}">
                                     <label>quantity</label>
-                                    <input min="1" max="100" value="1" type="number">
+                                    <input min="1" max={{data[5]}} value="1" name="qty" type="number">
                                     <button class="button" type="submit">add to cart</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
 
                         </div>
                     </div>

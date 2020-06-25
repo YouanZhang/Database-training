@@ -260,10 +260,10 @@ def myshop():
     print('传入myshop的SPU不为空')
     #要根据调用函数时输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
     SKU_LIST=getRightList(session['email'],SPU_Id)
-    iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
-    iphone_2=['1','iphone8p;128g;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
-    iphone_3=['1','iphone8p;64;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
-    list2=[iphone_1,iphone_2,iphone_3]
+    # iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
+    # iphone_2=['1','iphone8p;128g;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    # iphone_3=['1','iphone8p;64;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    # list2=[iphone_1,iphone_2,iphone_3]
 
     #下面也需要修改，传入的数据包括，SPU_list(id,name),sku_list,loggedIn,SPU_ID
     return render_template("myshop.html", list1 = list1,list2=SKU_LIST,loggedIn=valid,SPU_Id=SPU_Id)
@@ -386,6 +386,44 @@ def changePassword():
     else:
         return render_template("changePassword.html")
 
+#测试，进入详情页面
+@app.route("/show_productDescription")
+def show_productDescription():
+    if 'email' in session:
+        print('已经登录了')
+        if session['is_buyer']!='True':
+            print('还是卖家')
+            return redirect(url_for('myshop'))
+    #此函数会接受SKU_id
+    SKU_Id = request.args.get('SKU_Id')
+    #SKU_Id=10
+    if SKU_Id==None:
+        #测试使用的，用于进入详情
+        return redirect(url_for('myshop'))
+    #获取当前sku-id的详细信息
+    valid, datas=findSKUbyid(SKU_Id)
+    if valid:
+        data=datas[0]
+        loggedIn = test_getLoginDetails()
+        return render_template('/productDescription.html',loggedIn=loggedIn,data=data)
+    else:
+        msg='此商品已失效！'
+        return redirect(url_for('root'),msg=msg)
+
+@app.route("/addToCart", methods=["GET", "POST"])
+def addToCart():
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    else:
+        qty=int(request.form['qty'])
+        SKU_Id=request.form['SKU_Id']
+        print("输入的购物数量是%s" %(qty))
+        print("输入的SKU_Id是%s" %(SKU_Id))
+        #还需要再从数据库读取库存确认最新的库存并对比
+        valid,profileDatas= find_buyer_by_email(session['email'])
+        buyer_id=profileDatas[0][0]
+        addcart(buyer_id, SKU_Id, qty)
+        return redirect(url_for('show_productDescription',SKU_Id=SKU_Id))
 
 
 #测试，进入cart.html
@@ -407,10 +445,13 @@ def cart():
     NULL,buyer_data=find_buyer_by_email(session['email'])
     Buyer_id=buyer_data[0][0]
     cart=cart_detail(Buyer_id)
+    total = 0
+    for i in cart:
+        total += i[1][3] * i[0][2]
     #cart1=["1","10","2"]
     #cart2=["1","10","3"]
     #cart=[cart1,cart2]
-    return render_template("cart.html",  loggedIn=loggedIn,cart=cart)
+    return render_template("cart.html",  loggedIn=loggedIn,cart=cart,total =total)
 
 
 

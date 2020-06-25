@@ -3,6 +3,7 @@
 
 <head>
     <title>Your Cart</title>
+    <script src={{ url_for( 'static', filename='js/cart.js' ) }}></script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="stylesheet" href={{ url_for( 'static', filename='css/editProfile.css' ) }} />
@@ -105,7 +106,7 @@
             </div>
         </div>
     </div> -->
-<br><br><br><br><br><br>
+    <br><br><br><br><br><br>
     <div class="breadcrumbs_area  breadcrumbs_bg">
         <div class="container">
             <div class="row">
@@ -146,12 +147,12 @@
                                         <tr>
                                             <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
                                             <td class="product_thumb">
-                                                <a href="#"><img src={{ url_for('static', filename='uploads/' + i[1][6]) }} alt="商品图"></a>
+                                                <a href="#"><img src={{ url_for( 'static', filename='uploads/' + i[1][6]) }} width="200" alt="商品图"></a>
                                             </td>
                                             <td class="product_name"><a href="#">{{i[1][1]}}</a></td>
                                             <td class="product-price">{{i[1][3]}}</td>
-                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="{{i[0][2]}}" type="number"></td>
-                                            <td class="product_total">商品总价 = 单价*数量</td>
+                                            <td class="product_quantity"><label>{{i[0][2]}}</label></td>
+                                            <td class="product_total">{{ i[1][3] * i[0][2] }}</td>
 
 
                                         </tr>
@@ -164,9 +165,8 @@
                                             </td>
                                             <td class="product_name"><a href="#">商品名</a></td>
                                             <td class="product-price">商品单价</td>
-                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                            <td class="product_total">商品总价</td>
-
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number" oninput="getTotal()"></td>
+                                            <td class="product_total"><output name='x'></output></td>
 
                                         </tr>
                                     </tbody>
@@ -184,11 +184,23 @@
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
                                         <p>Total</p>
-                                        <p class="cart_amount">购物车总价</p>
+                                        <p class="cart_amount">{{total}}</p>
                                     </div>
                                     <div class="checkout_btn">
                                         <!-- 这里放结算的链接 -->
                                         <a href="">这里放结算的链接</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code right">
+                                <h3>Address</h3>
+                                <div class="coupon_inner">
+                                    <div class="cart_subtotal">
+                                        <label>Address <span>*</span></label>
+                                        <input type="text" name="address" style="width: 400px;">
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +211,6 @@
             </form>
         </div>
     </div>
-
 
 </body>
 
