@@ -453,6 +453,16 @@ def cart():
     #cart=[cart1,cart2]
     return render_template("cart.html",  loggedIn=loggedIn,cart=cart,total =total)
 
+#测试，删除cart中的一条SKU
+@app.route("/remove_one_cart/")
+def remove_one_cart():
+    NULL,buyer_data=find_buyer_by_email(session['email'])
+    Buyer_Id=buyer_data[0][0]
+    SKU_Id = int(request.args.get('SKU_Id'))
+    #remove_one_cart(SKU_Id,Buyer_Id)
+    print("删除的的SKU_Id是%s" %(SKU_Id))
+    return redirect(url_for('cart'))
+
 
 
 def allowed_file(filename):

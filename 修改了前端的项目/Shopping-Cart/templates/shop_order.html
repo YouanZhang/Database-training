@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-
+<!--注意，这是直接从cart.html弄来的，还没有修改页面和链接，请不要使用！！！！！！！！-->
 <head>
     <title>Your Cart</title>
     <script src={{ url_for( 'static', filename='js/cart.js' ) }}></script>
@@ -145,7 +145,7 @@
                                         {% for i in cart %}
                                         <!-- 每个商品展示为一个tr -->
                                         <tr>
-                                            <td class="product_remove"><a href="/remove_one_cart?SKU_Id={{i[0][1]}}"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
                                             <td class="product_thumb">
                                                 <a href="#"><img src={{ url_for( 'static', filename='uploads/' + i[1][6]) }} width="200" alt="商品图"></a>
                                             </td>
