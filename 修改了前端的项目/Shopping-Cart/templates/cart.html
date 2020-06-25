@@ -141,19 +141,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for i in cart %}
                                         <!-- 每个商品展示为一个tr -->
                                         <tr>
                                             <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
                                             <td class="product_thumb">
-                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
+                                                <a href="#"><img src={{ url_for('static', filename='uploads/' + i[1][6]) }} alt="商品图"></a>
                                             </td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
+                                            <td class="product_name"><a href="#">{{i[1][1]}}</a></td>
+                                            <td class="product-price">{{i[1][3]}}</td>
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="{{i[0][2]}}" type="number"></td>
                                             <td class="product_total">商品总价 = 单价*数量</td>
 
 
                                         </tr>
+                                        {% endfor %}
+
                                         <tr>
                                             <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
                                             <td class="product_thumb">

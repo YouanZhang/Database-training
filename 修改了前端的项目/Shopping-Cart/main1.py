@@ -15,6 +15,7 @@ from Controller.shop_control import *
 from Controller.buyer_control import *
 from Controller.class_control import *
 from Controller.sku_control import *
+from Controller.cart_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -391,9 +392,8 @@ def changePassword():
 @app.route("/cart")
 def cart():
     if 'email' not in session:
-        return redirect(url_for('loginForm'))
+        return redirect(url_for('test_loginForm'))
     loggedIn = test_getLoginDetails()
-    email = session['email']
     # with sqlite3.connect('database.db') as conn:
     #     cur = conn.cursor()
     #     cur.execute("SELECT userId FROM users WHERE email = ?", (email, ))
@@ -404,13 +404,13 @@ def cart():
     # for row in products:
     #     totalPrice += row[2]
     #return render_template("cart.html", products = products, totalPrice=totalPrice, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
-    Buyer_id,NULL1,NULL2,NULL3,NULL4=find_buyer_by_email(session['email'])
-    cart=findcart_by_buyerid(Buyer_id)
+    NULL,buyer_data=find_buyer_by_email(session['email'])
+    Buyer_id=buyer_data[0][0]
+    cart=cart_detail(Buyer_id)
     #cart1=["1","10","2"]
     #cart2=["1","10","3"]
     #cart=[cart1,cart2]
-    
-    return render_template("cart.html",  loggedIn=loggedIn)
+    return render_template("cart.html",  loggedIn=loggedIn,cart=cart)
 
 
 
