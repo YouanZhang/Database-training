@@ -387,8 +387,30 @@ def changePassword():
 
 
 
-
-
+#测试，进入cart.html
+@app.route("/cart")
+def cart():
+    if 'email' not in session:
+        return redirect(url_for('loginForm'))
+    loggedIn = test_getLoginDetails()
+    email = session['email']
+    # with sqlite3.connect('database.db') as conn:
+    #     cur = conn.cursor()
+    #     cur.execute("SELECT userId FROM users WHERE email = ?", (email, ))
+    #     userId = cur.fetchone()[0]
+    #     cur.execute("SELECT products.productId, products.name, products.price, products.image FROM products, kart WHERE products.productId = kart.productId AND kart.userId = ?", (userId, ))
+    #     products = cur.fetchall()
+    # totalPrice = 0
+    # for row in products:
+    #     totalPrice += row[2]
+    #return render_template("cart.html", products = products, totalPrice=totalPrice, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
+    Buyer_id,NULL1,NULL2,NULL3,NULL4=find_buyer_by_email(session['email'])
+    cart=findcart_by_buyerid(Buyer_id)
+    #cart1=["1","10","2"]
+    #cart2=["1","10","3"]
+    #cart=[cart1,cart2]
+    
+    return render_template("cart.html",  loggedIn=loggedIn)
 
 
 
