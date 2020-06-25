@@ -4,7 +4,7 @@ def addcart(buyer_id, sku_id, qty):
     conn = link_mysql()
     cur = conn.cursor()
     data = findcart(buyer_id, sku_id)
-    if len(data[0]) == 0:
+    if len(data) == 0:
         cur.execute('INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
         print('Successfully INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
     else:
@@ -43,6 +43,6 @@ def modify_cart(buyer_id, sku_id, qty):
     conn.close()
     print('UPDATE CART SET `QTY`=%S WHERE `buyer_id` = %s `sku_id` = %s', (qty, buyer_id, sku_id))
 #addcart(1, 5, 1)
-#addcart(1, 6, 1)
+#addcart(1, 10, 1)
 #modify_cart(1, 2, 20)
 #print(findcart_by_buyerid(1))
