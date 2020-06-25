@@ -19,7 +19,7 @@ def remove_SKU(sku_id):
     conn.commit()
     cur.close()
     conn.close()
-    print('DELETE FROM SKU WHERE `sku_id` = %s;', (sku_id, ))
+    #print('DELETE FROM SKU WHERE `sku_id` = %s;', (sku_id, ))
 
 #修改SKU
 def edit_SKU_by_SKUID(sku_id, name, desc, price,  qty):
