@@ -21,6 +21,20 @@ def remove_SKU(sku_id):
     conn.close()
     print('DELETE FROM SKU WHERE `sku_id` = %s;', (sku_id, ))
 
+#修改SKU
+def edit_SKU_by_SKUID(sku_id, name, desc, price,  qty):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('UPDATE SKU SET `sku_name`=%s, `sku_desc` = %s, `price`=%s, `qty` =%s \
+    WHERE `sku_id` = %s;', (name, desc, price, qty, sku_id))
+    # cur.execute('SELECT * FROM CART WHERE `buyer_id` = %s AND `sku_id` = %s;', (buyer_id, sku_id))
+    # print(cur.fetchall())
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('UPDATE SKU SET `sku_name`=%s, `sku_desc` = %s, `price`=%s, `qty` =%s \
+    WHERE `sku_id` = %s;', (name, desc, price, qty, sku_id))
+
 #查找SKU
 def findSKUbyid(id):
     conn = link_mysql()
@@ -59,3 +73,4 @@ def findSKUbyShopandSPU(shop_id, spu_id):
 #addSKU('华为P40Pro 8GB+128GB 零度白','华为P40Pro，5G协议，存储量128GB, 白色', 5988, 3)
 #print(findSKUbyShopandSPU(1, 3))
 #remove_SKU(3)
+#edit_SKU_by_SKUID(1, '小米9', '协议', 3999, 3)
