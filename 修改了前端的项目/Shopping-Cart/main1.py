@@ -410,13 +410,14 @@ def addToCart():
     if 'email' not in session:
         return redirect(url_for('test_loginForm'))
     else:
-        qty=request.form['qty']
+        qty=int(request.form['qty'])
         SKU_Id=request.form['SKU_Id']
         print("输入的购物数量是%s" %(qty))
         print("输入的SKU_Id是%s" %(SKU_Id))
         #还需要再从数据库读取库存确认最新的库存并对比
-        
-        SKU_Id=13
+        valid,profileDatas= find_buyer_by_email(session['email'])
+        buyer_id=profileDatas[0][0]
+        addcart(buyer_id, SKU_Id, qty)
         return redirect(url_for('show_productDescription',SKU_Id=SKU_Id))
 
 
