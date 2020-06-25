@@ -62,7 +62,7 @@
 
 <body>
     <div id="title">
-        <a href="/myshop">
+        <a href="/myshop?SPU_Id={{SPU_Id}}">
             <img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
         </a>
         <form>
@@ -149,6 +149,9 @@
                                 <div class="price_box">
                                     <span class="current_price">￥{{i[3]}}</span>
                                 </div>
+                                <div class="price_box">
+                                    <span class="current_price">库存： {{i[5]}}</span>
+                                </div>
                                 <div class="product_desc">
                                     {{i[2]}}
                                 </div>
@@ -159,7 +162,15 @@
                                         <!-- 这里放添加sku的链接 -->
                                         <a class="account_form button" href="/remove_SKU?SKU_Id={{i[0]}}&SPU_Id={{SPU_Id}}">删除</a>
                                     </butto>
+                                    <button>
+                                        <!-- 这里放修改sku的链接 -->
+                                        <a class="account_form button" href="/test_edit_SKU?SKU_Id={{i[0]}}&SPU_Id={{SPU_Id}}">修改</a>
+                                    </button>
                                 </div>
+
+
+
+
                             </div>
                         </div>
                     </div>

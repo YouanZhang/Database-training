@@ -131,6 +131,35 @@ def t_remove_SKU():
     remove_SKU(SKU_Id)
     return redirect(url_for('myshop',SPU_Id=SPU_Id))
 
+#测试使用，作为edit_SKU进入html的入口
+@app.route("/test_edit_SKU/")
+def test_edit_SKU():
+    SPU_Id = request.args.get('SPU_Id')
+    SKU_Id = int(request.args.get('SKU_Id'))
+    #SKU_Info=["1","《数据库实训》","这个课程实在是太棒了","99999","7","200","159","3"]
+    valid,SKU_Infos=findSKUbyid(SKU_Id)
+    SKU_Info=SKU_Infos[0]
+    #调用函数获取SKU的信息
+    if valid:
+        return render_template("edit_SKU.html",SKU_Id=SKU_Id, SPU_Id=SPU_Id, SKU_Info=SKU_Info )
+    else:
+        return redirect(url_for('myshop',SPU_Id=SPU_Id))
+#测试使用，作为edit_SKU.html连接数据库的入口
+@app.route("/edit_SKU", methods=["GET", "POST"])
+def edit_SKU():
+    SPU_Id = int(request.form['SPU_Id'])
+    SKU_Id = int(request.form['SKU_Id'])
+    if request.method=='POST':
+
+        #调用函数来修改SKU信息
+        name = request.form['SKU_name']
+        price = float(request.form['SKU_price'])
+        description = request.form['SKU_description']
+        stock = int(request.form['SKU_qty'])
+        #调用函数修改SKU信息
+        #edit_SKU(SKU_Id,name,price,description,stock)
+        edit_SKU_by_SKUID(SKU_Id, name, description, price,  stock)
+        return redirect(url_for('myshop',SPU_Id=SPU_Id))
 
 #测试使用，作为进入register页面入口
 @app.route("/registerationForm")
