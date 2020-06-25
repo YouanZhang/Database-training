@@ -9,5 +9,5 @@ def findSKUbyFullMatch(id):
     else:
         return findSKUbyWord(id)
 
-#print(findSKUbyFullMatch('小米9'))
+#print(findSKUbyFullMatch('2'))
 
