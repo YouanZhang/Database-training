@@ -260,10 +260,10 @@ def myshop():
     print('传入myshop的SPU不为空')
     #要根据调用函数时输入的SPU_ID，在右侧显示出所有当前SPU_ID且是商家的SKU的SKU_LIST
     SKU_LIST=getRightList(session['email'],SPU_Id)
-    iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
-    iphone_2=['1','iphone8p;128g;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
-    iphone_3=['1','iphone8p;64;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
-    list2=[iphone_1,iphone_2,iphone_3]
+    # iphone_1=['1','iphone8p;128g;白','这可是非常优秀的手机 , 当然电池不太行','8848',SPU_Id,'30','777']
+    # iphone_2=['1','iphone8p;128g;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    # iphone_3=['1','iphone8p;64;黑','这可是非常优秀的手机,  当然电池不太行','8848',SPU_Id,'30','777']
+    # list2=[iphone_1,iphone_2,iphone_3]
 
     #下面也需要修改，传入的数据包括，SPU_list(id,name),sku_list,loggedIn,SPU_ID
     return render_template("myshop.html", list1 = list1,list2=SKU_LIST,loggedIn=valid,SPU_Id=SPU_Id)
@@ -386,6 +386,21 @@ def changePassword():
     else:
         return render_template("changePassword.html")
 
+#测试，进入详情页面
+@app.route("/show_productDescription")
+def show_productDescroption():
+    #此函数会接受SKU_id
+    #SKU_Id = request.args.get('SKU_Id')
+    SKU_Id=10
+    #获取当前sku-id的详细信息
+    valid, datas=findSKUbyid(SKU_Id)
+    if valid:
+        data=datas[0]
+        loggedIn = test_getLoginDetails()
+        return render_template('/productDescription.html',loggedIn=loggedIn,data=data)
+    else:
+        msg='此商品已失效！'
+        return redirect(url_for('root'),msg=msg)
 
 
 #测试，进入cart.html
