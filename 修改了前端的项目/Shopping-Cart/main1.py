@@ -388,10 +388,13 @@ def changePassword():
 
 #测试，进入详情页面
 @app.route("/show_productDescription")
-def show_productDescroption():
+def show_productDescription():
     #此函数会接受SKU_id
-    #SKU_Id = request.args.get('SKU_Id')
-    SKU_Id=10
+    SKU_Id = request.args.get('SKU_Id')
+    #SKU_Id=10
+    if SKU_Id==None:
+        #测试使用的，用于进入详情
+        SKU_Id=10
     #获取当前sku-id的详细信息
     valid, datas=findSKUbyid(SKU_Id)
     if valid:
@@ -401,6 +404,20 @@ def show_productDescroption():
     else:
         msg='此商品已失效！'
         return redirect(url_for('root'),msg=msg)
+
+@app.route("/addToCart", methods=["GET", "POST"])
+def addToCart():
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    else:
+        qty=request.form['qty']
+        SKU_Id=request.form['SKU_Id']
+        print("输入的购物数量是%s" %(qty))
+        print("输入的SKU_Id是%s" %(SKU_Id))
+        #还需要再从数据库读取库存确认最新的库存并对比
+        
+        SKU_Id=13
+        return redirect(url_for('show_productDescription',SKU_Id=SKU_Id))
 
 
 #测试，进入cart.html
