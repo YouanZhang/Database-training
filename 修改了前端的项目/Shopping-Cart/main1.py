@@ -422,10 +422,13 @@ def cart():
     NULL,buyer_data=find_buyer_by_email(session['email'])
     Buyer_id=buyer_data[0][0]
     cart=cart_detail(Buyer_id)
+    total = 0
+    for i in cart:
+        total += i[1][3] * i[0][2]
     #cart1=["1","10","2"]
     #cart2=["1","10","3"]
     #cart=[cart1,cart2]
-    return render_template("cart.html",  loggedIn=loggedIn,cart=cart)
+    return render_template("cart.html",  loggedIn=loggedIn,cart=cart,total =total)
 
 
 
