@@ -3,11 +3,16 @@ from DAO.link_database import *
 def addcart(buyer_id, sku_id, qty):
     conn = link_mysql()
     cur = conn.cursor()
-    cur.execute('INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
+    data = findcart(buyer_id, sku_id)
+    if len(data[0]) == 0:
+        cur.execute('INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
+        print('Successfully INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
+    else:
+        new_qty = qty + data[0][2]
+        modify_cart(buyer_id, sku_id, new_qty)
     conn.commit()
     cur.close()
     conn.close()
-    print('Successfully INSERT INTO CART VALUES (%s,%s,%s);', (buyer_id, sku_id, qty))
 
 def findcart(buyer_id, sku_id):
     conn = link_mysql()
