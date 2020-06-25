@@ -11,6 +11,6 @@ def cart_detail(buyer_id):
         #print(data[i])
     return data
 
-def cart_clean(buyer_id):
+
 
 #print(cart_detail(1))

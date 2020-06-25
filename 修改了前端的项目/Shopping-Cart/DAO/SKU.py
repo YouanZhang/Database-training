@@ -81,6 +81,17 @@ def findSKUbyShopandSPU(shop_id, spu_id):
     cur.close()
     conn.close()
     return data
+
+def findSKUbyWord(word):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM SKU WHERE \
+    `sku_name` = %s OR `sku_desc` = %s;', (word, word))
+    data = cur.fetchall()
+    # print('SELECT * FROM BUYER WHERE `e_mail` = %s AND `password` = %s', (email, password))
+    cur.close()
+    conn.close()
+    return data
 #addSKU('华为P40Pro 8GB+128GB 冰霜银','华为P40Pro，5G协议，存储量256GB, 银色', 5988, 3)
 #addSKU('华为P40Pro 8GB+128GB 红色','华为P40Pro，5G协议，存储量128GB, 红色', 5988, 3, 100, '广州', 1)
 #addSKU('华为P40Pro 8GB+256GB 零度白','华为P40Pro，5G协议，存储量256GB, 白色', 6488, 3)
@@ -89,3 +100,4 @@ def findSKUbyShopandSPU(shop_id, spu_id):
 #remove_SKU(3)
 #edit_SKU_by_SKUID(1, '小米9', '协议', 3999, 3)
 #edit_SKU_QTY(1, 100)
+#print(findSKUbyWord('协议'))

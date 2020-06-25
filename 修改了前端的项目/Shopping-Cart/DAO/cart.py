@@ -32,6 +32,15 @@ def removecart(buyer_id, sku_id):
     conn.close()
     print('DELETE FROM CART WHERE `buyer_id`= %s AND `sku_id` = %s;', (buyer_id, sku_id))
 
+def cleanCart(buyer_id):
+    conn = link_mysql()
+    cur = conn.cursor()
+    cur.execute('DELETE FROM CART WHERE `buyer_id`= %s;', (buyer_id, ))
+    conn.commit()
+    cur.close()
+    conn.close()
+    print('DELETE FROM CART WHERE `buyer_id`= %s;', (buyer_id, ))
+
 def findcart_by_buyerid(buyer_id):
     conn = link_mysql()
     cur = conn.cursor()
@@ -55,4 +64,5 @@ def modify_cart(buyer_id, sku_id, qty):
 #addcart(1, 10, 1)
 #modify_cart(1, 2, 20)
 #print(findcart_by_buyerid(1))
-removecart(1, 6)
+#removecart(1, 6)
+cleanCart(1)

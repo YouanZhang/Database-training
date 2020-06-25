@@ -1,3 +1,13 @@
 from DAO.SKU import *
 
-def findSKUbyFullMatch()
+def findSKUbyFullMatch(id):
+    id = str(id)
+    if(id.isdigit()):
+        id = int(id)
+        NULL, data = findSKUbyid(id)
+        return data
+    else:
+        return findSKUbyWord(id)
+
+#print(findSKUbyFullMatch('小米9'))
+
