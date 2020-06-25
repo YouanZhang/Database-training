@@ -298,6 +298,7 @@ def productDescription():
 #账户信息
 @app.route("/account/profile")
 def profileHome():
+    return redirect(url_for('editProfile'))
     if 'email' not in session:
         return redirect(url_for('root'))
     loggedIn= test_getLoginDetails()
@@ -444,6 +445,7 @@ def cart():
     #return render_template("cart.html", products = products, totalPrice=totalPrice, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
     NULL,buyer_data=find_buyer_by_email(session['email'])
     Buyer_id=buyer_data[0][0]
+    address=buyer_data[0][4]
     cart=cart_detail(Buyer_id)
     total = 0
     for i in cart:
@@ -451,7 +453,7 @@ def cart():
     #cart1=["1","10","2"]
     #cart2=["1","10","3"]
     #cart=[cart1,cart2]
-    return render_template("cart.html",  loggedIn=loggedIn,cart=cart,total =total)
+    return render_template("cart.html",  loggedIn=loggedIn,cart=cart,total =total,address=address)
 
 #测试，删除cart中的一条SKU
 @app.route("/remove_one_cart/")
