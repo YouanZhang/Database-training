@@ -30,5 +30,5 @@ def createOrderFromCart(buyer_id, status, address, express_id):
 
     return True, OrderId, sumprice
 
-#print(createOrderFromCart(1, 'paying', 'anqing', '222-333'))
+print(createOrderFromCart(1, 'paying', 'anqing', '222-333'))
 
