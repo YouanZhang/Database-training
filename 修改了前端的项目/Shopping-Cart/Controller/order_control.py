@@ -33,3 +33,8 @@ def createOrderFromCart(buyer_id, status, address, express_id):
 #print(createOrderFromCart(1, 'paying', 'anqing', '222-333'))
 
 def getOrder(Order_id):
+    parent_order_data = findOrderByOrderId(Order_id)
+    sub_order_data = findSubOrderByParentId(Order_id)
+    return parent_order_data, sub_order_data
+
+#print(getOrder(8))
