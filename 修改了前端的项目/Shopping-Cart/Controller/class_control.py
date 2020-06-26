@@ -18,7 +18,11 @@ def getRightList(email, spu_id):
     ret = findSKUbyShopandSPU(shop_id, spu_id)
     return ret
 
+def getBuyerRightList(spu_id):
+    NULL, ret = findSKUbySPUid(spu_id)
+    return ret
+
 #print(getLeftList())
 #print(len(getLeftList()[1][1]))
-print(getRightList('2879156336@qq.com', 3))
+#print(getBuyerRightList(3))
 #print(findSKUbyShopandSPU(1, 3))
