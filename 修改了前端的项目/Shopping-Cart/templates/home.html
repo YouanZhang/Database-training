@@ -169,24 +169,29 @@
                 <aside class="sidebar_widget">
                     <div class="widget_inner">
                         <div class="widget_list widget_categories">
+
                             <!-- 这里从数据库获取并展示目录 -->
                             <ul>
-                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">iPhone</a>
+                                {% for i in list1 %}
+                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">{{i[0][1]}}</a>
+                                    {% for x in i[1] %}
                                     <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
                                         <!-- 每个spu点击后等效于搜索这个spu的关键词 -->
-                                        <li><a href="#">iPhone 7</a></li>
-                                        <li><a href="#">iPhone 8</a></li>
-                                        <li><a href="#">iPhone X</a></li>
+                                        {% if x[0]==SPU_Id %}
+                                        <li><a href="/root?SPU_Id={{x[0]}}">
+                                            <font  color="#febc8b">{{x[1]}}</font>
+                                            </a></li>
+                                        {% else %}
+                                        <li><a href="/root?SPU_Id={{x[0]}}">{{x[1]}}</a></li>
+                                        {% endif %}
                                     </ul>
+                                    {% endfor %}
                                 </li>
-                                <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)" class="active">小米</a>
-                                    <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
-                                        <li><a href="#">小米 6</a></li>
-                                        <li><a href="#">小米 8</a></li>
-                                        <li><a href="#">小米 10</a></li>
-                                    </ul>
-                                </li>
+                                {% endfor %}
+
                             </ul>
+
+
                         </div>
                     </div>
                 </aside>

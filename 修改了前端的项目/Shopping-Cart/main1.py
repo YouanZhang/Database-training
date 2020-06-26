@@ -16,6 +16,7 @@ from Controller.buyer_control import *
 from Controller.class_control import *
 from Controller.sku_control import *
 from Controller.cart_control import *
+from Controller.home_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -53,11 +54,18 @@ def root():
     loggedIn = test_getLoginDetails()
 #下面需要改，后期弄成自己的商品的入口    
     if loggedIn:
+        print('test_已经登陆')
         if session['is_buyer']=='True':
-            return render_template('home.html',loggedIn=loggedIn)
+            valid,profileDatas= find_buyer_by_email(session['email'])
+            profileData=profileDatas[0]
+            buyer_id=profileData[0]
+            data=getRecommPage(buyer_id)
+            list1=getLeftList()
+            return render_template('home.html',loggedIn=loggedIn,data=data,list1=list1)
         else:
             return redirect(url_for('myshop'))
     else:
+        print('test_w未登陆')
         with sqlite3.connect('database.db') as conn:
             cur = conn.cursor()
             cur.execute('SELECT productId, name, price, description, image, stock FROM products')
@@ -65,7 +73,7 @@ def root():
             cur.execute('SELECT categoryId, name FROM categories')
             categoryData = cur.fetchall()
         itemData = parse(itemData)   
-        return render_template('home.html', itemData=itemData, loggedIn=loggedIn, categoryData=categoryData)
+        return render_template('home.html', itemData=itemData, loggedIn=loggedIn, list1=list1)
 
 
 #测试使用，作为进入add_spu的入口
