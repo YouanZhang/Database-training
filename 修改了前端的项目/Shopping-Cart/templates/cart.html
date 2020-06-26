@@ -150,10 +150,11 @@
                                                 <a href="/show_productDescription?SKU_Id={{i[0][1]}}"><img src={{ url_for( 'static', filename='uploads/' + i[1][6]) }} width="200" alt="商品图"></a>
                                             </td>
                                             <td class="product_name"><a href="#">{{i[1][1]}}</a></td>
-                                            <td class="product-price">{{i[1][3]}}</td>
-                                            <td class="product_quantity"><label>{{i[0][2]}}</label></td>
-                                            <td class="product_total">{{ i[1][3] * i[0][2] }}</td>
-
+                                            <td class="product_price">{{i[1][3]}}</td>
+                                            <form>
+                                                <td class="product_quantity"><input min="1" max="100" value="{{i[0][2]}}" type="number" id="{{i[0][1]}}_quantity" oninput="getProductTotal('{{i[0][1]}}', '{{i[1][3]}}')"></td>
+                                                <td class="product_total"><output type="number" id="{{i[0][1]}}_total" name="total" value="{{i[1][3] * i[0][2]}}">{{i[1][3] * i[0][2]}}</output></td>
+                                            </form>
 
                                         </tr>
                                         {% endfor %}
@@ -165,9 +166,10 @@
                                             </td>
                                             <td class="product_name"><a href="#">商品名</a></td>
                                             <td class="product-price">商品单价</td>
-                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number" oninput="getTotal()"></td>
-                                            <td class="product_total"><output name='x'></output></td>
-
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number" id='a' oninput="getProductTotal(1)"></td>
+                                            <td class="product_total">
+                                                <output type='text' id='x' value="1"></output>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -183,8 +185,8 @@
                                 <h3>Cart Totals</h3>
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
-                                        <p>Total</p>
-                                        <p class="cart_amount">{{total}}</p>
+                                        <p>Cart Total</p>
+                                        <p class="cart_amount"><output type="number" id='cart_total' value="{{total}}">{{total}}</output></p>
                                     </div>
                                     <div class="checkout_btn">
                                         <!-- 这里放结算的链接 -->
