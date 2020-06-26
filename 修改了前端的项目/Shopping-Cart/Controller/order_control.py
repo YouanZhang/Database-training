@@ -32,9 +32,19 @@ def createOrderFromCart(buyer_id, status, address, express_id):
 
 #print(createOrderFromCart(1, 'paying', 'anqing', '222-333'))
 
+def findSubOrderByParentIdWithNameandCity(parent_id):
+    data = findSubOrderByParentId(parent_id)
+    for i in range(len(data)):
+        sku_id = data[i][2]
+        NULL, sku_info = findSKUbyid(sku_id)
+        name = sku_info[0][1]
+        city = sku_info[0][6]
+        data[i] = data[i] + (name, city)
+    return data
+
 def getOrder(Order_id):
     parent_order_data = findOrderByOrderId(Order_id)
-    sub_order_data = findSubOrderByParentId(Order_id)
+    sub_order_data = findSubOrderByParentIdWithNameandCity(Order_id)
     return parent_order_data, sub_order_data
 
 def getBuyerOrder(buyer_id):
@@ -45,4 +55,5 @@ def getBuyerOrder(buyer_id):
         list += [getOrder(Order_id)]
     return list
 
+#print(findSubOrderByParentIdWithNameandCity(8))
 #print(getBuyerOrder(1))
