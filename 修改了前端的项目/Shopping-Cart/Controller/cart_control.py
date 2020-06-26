@@ -11,6 +11,11 @@ def cart_detail(buyer_id):
         #print(data[i])
     return data
 
-
+def modify_cart_list(data):
+    if len(data) == 0:
+        return
+    for row in data:
+        modify_cart(row[0], row[1], row[2])
 
 #print(cart_detail(1))
+#modify_cart_list(findcart_by_buyerid(1))

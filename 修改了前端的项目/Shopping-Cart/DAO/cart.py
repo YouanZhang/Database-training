@@ -65,4 +65,4 @@ def modify_cart(buyer_id, sku_id, qty):
 #modify_cart(1, 2, 20)
 #print(findcart_by_buyerid(1))
 #removecart(1, 6)
-cleanCart(1)
+#cleanCart(1)
