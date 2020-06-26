@@ -24,5 +24,5 @@ def getBuyerRightList(spu_id):
 
 #print(getLeftList())
 #print(len(getLeftList()[1][1]))
-print(getBuyerRightList(3))
+#print(getBuyerRightList(3))
 #print(findSKUbyShopandSPU(1, 3))
