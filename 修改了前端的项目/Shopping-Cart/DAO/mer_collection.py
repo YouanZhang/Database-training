@@ -1,4 +1,4 @@
-from link_database import *
+from DAO.link_database import *
 
 def addMerColletion(buyer_id, sku_id):
     conn = link_mysql()
@@ -27,5 +27,5 @@ def dropMerCollection(buyer_id, sku_id):
     conn.close()
 
 #addMerColletion(5, 3)
-print(findMerCollectionByBuyerID(5))
+#print(findMerCollectionByBuyerID(5))
 #dropMerCollection(5, 3)
