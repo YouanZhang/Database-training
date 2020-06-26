@@ -52,28 +52,39 @@ def test_getLoginDetails():
 @app.route("/")
 def root():
     loggedIn = test_getLoginDetails()
-#下面需要改，后期弄成自己的商品的入口    
+#下面需要改，后期弄成自己的商品的入口
+    list1=getLeftList()    
     if loggedIn:
         print('test_已经登陆')
         if session['is_buyer']=='True':
             valid,profileDatas= find_buyer_by_email(session['email'])
             profileData=profileDatas[0]
             buyer_id=profileData[0]
-            data=getRecommPage(buyer_id)
-            list1=getLeftList()
-            return render_template('home.html',loggedIn=loggedIn,data=data,list1=list1)
+            SPU_Id = request.args.get('SPU_Id')
+            if SPU_Id==None:
+                print('SPU_ID为空')
+                SPU_Id=-1
+                data=getRecommPage(buyer_id)
+                #print(getRecommPage(buyer_id))
+                return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
+            else:
+                SPU_Id=int(SPU_Id)
+                print("SPU_id is %s" %SPU_Id)
+                data=getBuyerRightList(SPU_Id)
+                return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
+
+            
         else:
+            #登陆的是商家
             return redirect(url_for('myshop'))
     else:
-        print('test_w未登陆')
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute('SELECT productId, name, price, description, image, stock FROM products')
-            itemData = cur.fetchall()
-            cur.execute('SELECT categoryId, name FROM categories')
-            categoryData = cur.fetchall()
-        itemData = parse(itemData)   
-        return render_template('home.html', itemData=itemData, loggedIn=loggedIn, list1=list1)
+        SPU_Id = request.args.get('SPU_Id')
+        if SPU_Id==None:
+            #需要展示未登录，且未选定SPU时的首页SKU-list
+            #data=
+            #return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1)
+            print('未登录且未选SPU')
+        return render_template('home.html',  loggedIn=loggedIn, list1=list1)
 
 
 #测试使用，作为进入add_spu的入口

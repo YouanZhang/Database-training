@@ -128,6 +128,7 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href={{ url_for( 'static', filename="assets/css/style.css" )}}>
+    
 </head>
 
 <body>
@@ -178,12 +179,12 @@
                                     <ul class="widget_dropdown_categories dropdown_categories1" style="display: block;">
                                         <!-- 每个spu点击后等效于搜索这个spu的关键词 -->
                                         {% if x[0]==SPU_Id %}
-                                        <li><a href="/root?SPU_Id={{x[0]}}">
+                                        <li><a href="/?SPU_Id={{x[0]}}">
                                             <font  color="#febc8b">{{x[1]}}</font>
                                             </a></li>
                                         {% else %}
-                                        <li><a href="/root?SPU_Id={{x[0]}}">{{x[1]}}</a></li>
-                                        {% endif %}
+                                        <li><a href="/?SPU_Id={{x[0]}}">{{x[1]}}</a></li>
+                                        {%  endif %}
                                     </ul>
                                     {% endfor %}
                                 </li>
@@ -203,74 +204,28 @@
                     <!-- 这里放sku -->
                     <!-- 如果没有搜索过的话，就显示推荐的商品 -->
                     <!-- 如果搜索过的话，就显示搜索出来的商品 -->
+                    {% for i in list2 %}
                     <div class="col-md-4 col-sm-6 col-lg-4">
                         <div class="single_product">
                             <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
+                                <a class="primary_img" href="show_productDescription?SKU_Id={{i[0]}}"><img src={{ url_for('static', filename='uploads/' + i[6]) }} width="200" alt="这里放图片，还有商品详情的链接"></a>
                             </div>
                             <div class="product_content grid_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
+                                <h4 class="product_name"><a href="/show_productDescription?SKU_Id={{i[0]}}">{{i[1]}}</a></h4>
                                 <div class="price_box">
-                                    <span class="current_price">$79.00</span>
+                                    <span class="current_price">￥{{i[3]}}</span>
                                 </div>
                                 <div class="add_to_cart">
-                                    <a href="cart.html" title="" data-original-title="Add to cart"><i
-                                            class="fa fa-shopping-cart" aria-hidden="true"></i> Add to cart</a>
+                                    <a href="/show_productDescription?SKU_Id={{i[0]}}" title="" data-original-title="Add to cart"><i
+                                            class="fa fa-shopping-cart" aria-hidden="true"></i> 点击进入</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4">
-                        <div class="single_product">
-                            <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
-                            </div>
-                            <div class="product_content grid_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
-                                <div class="price_box">
-                                    <span class="current_price">$79.00</span>
-                                </div>
-                                <div class="add_to_cart">
-                                    <a href="cart.html" title="" data-original-title="Add to cart"><i
-                                            class="fa fa-shopping-cart" aria-hidden="true"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4">
-                        <div class="single_product">
-                            <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
-                            </div>
-                            <div class="product_content grid_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
-                                <div class="price_box">
-                                    <span class="current_price">$79.00</span>
-                                </div>
-                                <div class="add_to_cart">
-                                    <a href="cart.html" title="" data-original-title="Add to cart"><i
-                                            class="fa fa-shopping-cart" aria-hidden="true"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4">
-                        <div class="single_product">
-                            <div class="product_thumb">
-                                <a class="primary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt="这里放图片，还有商品详情的链接"></a>
-                            </div>
-                            <div class="product_content grid_content">
-                                <h4 class="product_name"><a href="product-details.html">iPhone 8; 金色; 128G</a></h4>
-                                <div class="price_box">
-                                    <span class="current_price">$79.00</span>
-                                </div>
-                                <div class="add_to_cart">
-                                    <a href="cart.html" title="" data-original-title="Add to cart"><i
-                                            class="fa fa-shopping-cart" aria-hidden="true"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+
+
+
                 </div>
             </div>
         </div>
