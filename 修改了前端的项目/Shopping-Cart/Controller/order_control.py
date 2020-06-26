@@ -37,4 +37,12 @@ def getOrder(Order_id):
     sub_order_data = findSubOrderByParentId(Order_id)
     return parent_order_data, sub_order_data
 
-#print(getOrder(8))
+def getBuyerOrder(buyer_id):
+    data = findOrderByBuyerId(buyer_id)
+    list = []
+    for row in data:
+        Order_id = row[0]
+        list += [getOrder(Order_id)]
+    return list
+
+#print(getBuyerOrder(1))
