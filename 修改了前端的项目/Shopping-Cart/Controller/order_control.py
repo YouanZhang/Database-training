@@ -70,4 +70,4 @@ def getBuyerOrder(buyer_id):
 
 #print(findSubOrderByParentIdWithNameandCity(8))
 #print(getBuyerOrder(1))
-print(findSubOrderByShopIdWithNameandCity(1))
+#print(findSubOrderByShopIdWithNameandCity(1))
