@@ -18,6 +18,7 @@ from Controller.sku_control import *
 from Controller.cart_control import *
 from Controller.home_control import *
 from Controller.order_control import *
+from Controller.search_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -50,7 +51,7 @@ def test_getLoginDetails():
     return (loggedIn)
     
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def root():
     loggedIn = test_getLoginDetails()
 #下面需要改，后期弄成自己的商品的入口
@@ -58,10 +59,16 @@ def root():
     if loggedIn:
         print('test_已经登陆')
         if session['is_buyer']=='True':
+            search_key = request.form.get('search_key')
             valid,profileDatas= find_buyer_by_email(session['email'])
             profileData=profileDatas[0]
             buyer_id=profileData[0]
             SPU_Id = request.args.get('SPU_Id')
+            if search_key!=None:
+                print('search key is :')
+                print(search_key)
+                data=findSKUbyFullMatch((search_key))
+                return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=-1)
             if SPU_Id==None:
                 print('SPU_ID为空')
                 SPU_Id=-1
@@ -79,6 +86,11 @@ def root():
             return redirect(url_for('myshop'))
     else:
         SPU_Id = request.args.get('SPU_Id')
+        if search_key!=None:
+            print('search key is :')
+            print(search_key)
+            data=findSKUbyFullMatch((search_key))
+            return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=-1)
         if SPU_Id==None:
             SPU_Id=-1
             data=getFirstPageForNotLogin()

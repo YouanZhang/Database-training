@@ -54,8 +54,8 @@
         <a href="/">
             <img id="logo" src={ { url_for( 'static', filename='images/logo.png' ) }} />
         </a>
-        <form>
-            <input id="searchBox" type="text" name="searchQuery">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <input id="searchBox" type="text" name="search_key">
             <input id="searchButton" type="submit" value="Search">
         </form>
 
