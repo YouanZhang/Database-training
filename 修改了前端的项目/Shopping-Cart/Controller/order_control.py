@@ -34,11 +34,15 @@ def createOrderFromCart(buyer_id, status, address, express_id):
 def findSubOrderByShopIdWithNameandCity(shop_id):
     data = findSubOrderByShopId(shop_id)
     for i in range(len(data)):
+        parent_id = data[i][0]
+        parent_order_info = findOrderByOrderId(parent_id)
+        buyer_id = parent_order_info[0][1]
+        dtime = parent_order_info[0][2]
         sku_id = data[i][2]
         NULL, sku_info = findSKUbyid(sku_id)
         name = sku_info[0][1]
         city = sku_info[0][6]
-        data[i] = data[i] + (name, city)
+        data[i] = data[i] + (name, city, buyer_id, dtime)
     return data
 
 def findSubOrderByParentIdWithNameandCity(parent_id):
@@ -66,4 +70,4 @@ def getBuyerOrder(buyer_id):
 
 #print(findSubOrderByParentIdWithNameandCity(8))
 #print(getBuyerOrder(1))
-#print(findSubOrderByShopIdWithNameandCity(1))
+print(findSubOrderByShopIdWithNameandCity(1))
