@@ -51,34 +51,28 @@
 </head>
 
 <body>
+</head>
+
+<body>
     <div id="title">
-        <a href="/">
-            <img id="logo" src={ { url_for( 'static', filename='images/logo.png' ) }} />
+        <a href="/myshop">
+            <img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
         </a>
         <form>
             <input id="searchBox" type="text" name="searchQuery">
             <input id="searchButton" type="submit" value="Search">
         </form>
 
-        {% if not loggedIn %}
-        <div id="signInButton">
-            <a class="link" href="/test_loginForm">Sign In</a>
-        </div>
-        {% else %}
         <div class="dropdown">
-            <button class="dropbtn">Hello, <br>{{firstName}}</button>
+            <button class="dropbtn">Hello<br>{{firstName}}</button>
             <div class="dropdown-content">
+               <!--your order 后面需要改成商家的订单页面-->
                 <a href="/account/orders">Your orders</a>
                 <a href="/account/profile">Your profile</a>
-                <hr>
-                <a href="/logout">Sign Out</a>
             </div>
         </div>
-        {% endif %}
-        <div id="kart">
-            <a class="link" href="/cart">
-                <img src={{url_for( 'static', filename='images/shoppingCart.png' )}} id="cartIcon" /> CART {{noOfItems}}
-            </a>
+        <div id="signInButton">
+            <a class="link" href="/logout">Sign out</a>
         </div>
     </div>
 
@@ -144,24 +138,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for i in data %}
                                         <tr>
-                                            <td>xxx</td>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity">数量</td>
-                                            <td class="product_total">总价</td>
+                                            <td>{{i[9]}}</td>
+                                            <td>{{i[1]}}</td>
+                                            <td>{{i[10]}}</td>
+                                            <td class="product_name"><a href="/show_productDescription?SKU_Id={{i[2]}}">{{i[7]}}</a></td>
+                                            <td class="product-price">{{i[5]/i[3]}}</td>
+                                            <td class="product_quantity">{{i[3]}}</td>
+                                            <td class="product_total">{{i[5]}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>xxx</td>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity">数量</td>
-                                            <td class="product_total">总价</td>
-                                        </tr>
+                                        {% endfor %}
+                                        
                                     </tbody>
                                 </table>
                             </div>

@@ -131,20 +131,18 @@
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
+                            {% for i in data %} 
                                 <table>
                                     <thead>
-                                        <tr>
-                                            <th>订单号</th>
-                                            <th>时间</th>
+                                
+                                    <tbody>
+                                        <td>订单号：{{i[0][0][0]}}</td>
+                                        <td>创建时间:{{i[0][0][2]}}</td>                                    
                                         </tr>
-                                        <tr>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
-                                        </tr>
-                                    </thead>
+                                    </tbody>
                                     <thead>
                                         <tr>
-                                            <th class="product_thumb">Image</th>
+                                            <th class="product_thumb">Pic</th>
                                             <th class="product_name">Product</th>
                                             <th class="product-price">Price</th>
                                             <th class="product_quantity">Quantity</th>
@@ -152,68 +150,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for x in i[1] %}
                                         <tr>
+                                            
                                             <td class="product_thumb">
-                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
+                                               <!--picture-->
+                                               <a class="primary_img" href="show_productDescription?SKU_Id={{x[2]}}">
+                                                   <img src={{ url_for('static', filename='uploads/' + x[8]) }} width="200" alt="这里放图片，还有商品详情的链接">
+                                                </a>
                                             </td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity">数量</td>
-                                            <td class="product_total">总价</td>
+                                            <td class="product_name"><a href="/show_productDescription?SKU_Id={{x[2]}}">{{x[7]}}</a></td>
+                                            <td class="product-price">{{x[5]/x[3]}}</td>
+                                            <td class="product_quantity">{{x[3]}}</td>
+                                            <td class="product_total">{{x[5]}}</td>
+                                            
                                         </tr>
-                                        <tr>
-                                            <td class="product_thumb">
-                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
-                                            </td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity">数量</td>
-                                            <td class="product_total">总价</td>
-                                        </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
+                                <br><br>
+                            {% endfor %} 
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12">
-                        <div class="table_desc">
-                            <div class="cart_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>订单号</th>
-                                            <th>时间</th>
-                                        </tr>
-                                        <tr>
-                                            <td>xxxxxx</td>
-                                            <td>xxxxxx</td>
-                                        </tr>
-                                    </thead>
-                                    <thead>
-                                        <tr>
-                                            <th class="product_thumb">Image</th>
-                                            <th class="product_name">Product</th>
-                                            <th class="product-price">Price</th>
-                                            <th class="product_quantity">Quantity</th>
-                                            <th class="product_total">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="product_thumb">
-                                                <a href="#"><img src="assets/img/s-product/product.jpg" alt="商品图"></a>
-                                            </td>
-                                            <td class="product_name"><a href="#">商品名</a></td>
-                                            <td class="product-price">商品单价</td>
-                                            <td class="product_quantity">数量</td>
-                                            <td class="product_total">总价</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </form>
         </div>

@@ -125,7 +125,6 @@
 
     <div class="shopping_cart_area">
         <div class="container">
-            <form action="#">
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
@@ -165,6 +164,8 @@
                         </div>
                     </div>
                 </div>
+
+            <form action="/create_order" method="POST" enctype="multipart/form-data">
                 <!--coupon code area start-->
                 <div class="coupon_area">
                     <div class="row">
@@ -177,8 +178,10 @@
                                         <p class="cart_amount"><output type="number" id='cart_total' value="{{total}}">{{total}}</output></p>
                                     </div>
                                     <div class="checkout_btn">
-                                        <!-- 这里放结算的链接 -->
-                                        <a href="">这里放结算的链接</a>
+
+                                        <!-- 这里放结算的链接 --> 
+                                        <button type="submit">提交订单</button>
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -199,6 +202,7 @@
                 </div>
                 <!--coupon code area end-->
             </form>
+            
         </div>
     </div>
 

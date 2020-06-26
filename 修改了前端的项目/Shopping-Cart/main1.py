@@ -17,6 +17,7 @@ from Controller.class_control import *
 from Controller.sku_control import *
 from Controller.cart_control import *
 from Controller.home_control import *
+from Controller.order_control import *
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -412,9 +413,7 @@ def changePassword():
 def show_productDescription():
     if 'email' in session:
         print('已经登录了')
-        if session['is_buyer']!='True':
-            print('还是卖家')
-            return redirect(url_for('myshop'))
+
     #此函数会接受SKU_id
     SKU_Id = request.args.get('SKU_Id')
     #SKU_Id=10
@@ -435,6 +434,8 @@ def show_productDescription():
 def addToCart():
     if 'email' not in session:
         return redirect(url_for('test_loginForm'))
+    if session['is_buyer']!='True':
+        return redirect(url_for('myshop'))
     else:
         qty=int(request.form['qty'])
         SKU_Id=request.form['SKU_Id']
@@ -486,14 +487,47 @@ def remove_one_cart():
     print("删除的的SKU_Id是%s" %(SKU_Id))
     return redirect(url_for('cart'))
 
+@app.route("/create_order", methods=["GET", "POST"])
+def create_order():
+
+
+    #createOrderFromCart(buyer_id, status, address, express_id)
+    NULL,buyer_data=find_buyer_by_email(session['email'])
+    Buyer_id=buyer_data[0][0]
+    cart=cart_detail(Buyer_id)
+    if len(cart) == 0:
+        return redirect(url_for('cart')) 
+    address=request.form['address']
+    createOrderFromCart(Buyer_id, '0', address, 'default')
+    cleanCart(Buyer_id)
+    return redirect(url_for('cart'))    
+
+@app.route("/account/orders")
+def acount_orders():
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    if session['is_buyer']=='True':
+        return redirect(url_for('buyer_order'))
+    else:
+         return redirect(url_for('seller_order'))
 
 @app.route("/buyer_order")
 def buyer_order():
-    return render_template("buyer_order.html")
+    NULL,buyer_data=find_buyer_by_email(session['email'])
+    Buyer_id=buyer_data[0][0]
+    data=getBuyerOrder(Buyer_id)
+    i=data[0]
+    print(i[1][0])
+    return render_template("buyer_order.html",data=data,loggedIn=True)
 
 @app.route("/seller_order")
 def seller_order():
-    return render_template("seller_order.html")
+    valid,profileDatas=find_shop_by_email(session['email'])
+    shop_id=profileDatas[0] [0] 
+    data= findSubOrderByShopIdWithNameandCity(shop_id)
+    print(data[0])
+    print('hhhhhh')
+    return render_template("seller_order.html",data=data,loggedIn=True)
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -514,7 +548,21 @@ def parse(data):
         ans.append(curr)
     return ans
 
+@app.route('/findSKU_name_by_id/<string:id>')
+def findSKU_name_by_id(id):
+    print("tttttttttttttt")
+    print(id)
+    id=int(id)
+    NULL,datas=findSKUbyid(id)
+    data=datas[0]
+    return data[1]
 
+@app.route('/findSKU_pic_by_id/<string:id>')
+def findSKU_pic_by_id(id):
+    id= int(id)
+    NULL,datas=findSKUbyid(id)
+    data=datas[0]
+    return data[6]  
 
 if __name__ == '__main__':
     app.run(debug=True)
