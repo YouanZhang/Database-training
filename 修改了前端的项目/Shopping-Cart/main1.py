@@ -85,6 +85,7 @@ def root():
             #登陆的是商家
             return redirect(url_for('myshop'))
     else:
+        search_key = request.form.get('search_key')
         SPU_Id = request.args.get('SPU_Id')
         if search_key!=None:
             print('search key is :')
