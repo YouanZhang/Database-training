@@ -577,6 +577,10 @@ def findSKU_pic_by_id(id):
     data=datas[0]
     return data[6]  
 
+@app.route('/wishlist')
+def wishlist():
+    return render_template("wishlist.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
 
