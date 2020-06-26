@@ -487,6 +487,13 @@ def remove_one_cart():
     return redirect(url_for('cart'))
 
 
+@app.route("/buyer_order")
+def buyer_order():
+    return render_template("buyer_order.html")
+
+@app.route("/seller_order")
+def seller_order():
+    return render_template("seller_order.html")
 
 def allowed_file(filename):
     return '.' in filename and \
