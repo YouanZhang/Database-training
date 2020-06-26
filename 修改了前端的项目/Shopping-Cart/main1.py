@@ -69,7 +69,6 @@ def root():
                 return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
             else:
                 SPU_Id=int(SPU_Id)
-                print("SPU_id is %s" %SPU_Id)
                 data=getBuyerRightList(SPU_Id)
                 return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
 
@@ -80,11 +79,13 @@ def root():
     else:
         SPU_Id = request.args.get('SPU_Id')
         if SPU_Id==None:
-            #需要展示未登录，且未选定SPU时的首页SKU-list
-            #data=
-            #return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1)
-            print('未登录且未选SPU')
-        return render_template('home.html',  loggedIn=loggedIn, list1=list1)
+            SPU_Id=-1
+            data=getFirstPageForNotLogin()
+            return render_template('home.html',loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
+        else:
+            SPU_Id=int(SPU_Id)
+            data=getBuyerRightList(SPU_Id)
+            return render_template('home.html',  loggedIn=loggedIn,list2=data,list1=list1,SPU_Id=SPU_Id)
 
 
 #测试使用，作为进入add_spu的入口

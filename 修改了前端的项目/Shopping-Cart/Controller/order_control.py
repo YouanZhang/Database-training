@@ -32,3 +32,4 @@ def createOrderFromCart(buyer_id, status, address, express_id):
 
 #print(createOrderFromCart(1, 'paying', 'anqing', '222-333'))
 
+def getOrder(Order_id):
