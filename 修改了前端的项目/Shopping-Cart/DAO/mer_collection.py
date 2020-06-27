@@ -2,12 +2,13 @@ from DAO.link_database import *
 from DAO.link_redis import *
 from DAO.SKU import *
 redislink = link_redis()
+
 def addMerColletion(buyer_id, sku_id):
     conn = link_mysql()
     cur = conn.cursor()
     list = findMerCollectionByBuyerID(buyer_id)
     for x in list:
-        if x == sku_id:
+        if int(x[0]) == sku_id:
             return
     cur.execute('INSERT INTO MER_COLLECTION VALUES (%s,%s);', (buyer_id, sku_id))
     redislink.rpush(buyer_id, sku_id)
