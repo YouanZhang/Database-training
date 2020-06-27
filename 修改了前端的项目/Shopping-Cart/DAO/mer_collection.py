@@ -33,6 +33,8 @@ def findMerCollectionByBuyerID(buyer_id):
     return retlist
 
 def dropMerCollection(buyer_id, sku_id):
+    r = link_redis()
+    r.lrem(buyer_id, 0, sku_id)
     conn = link_mysql()
     cur = conn.cursor()
     cur.execute('DELETE FROM MER_COLLECTION WHERE buyer_id = %s AND sku_id = %s',(buyer_id, sku_id))
