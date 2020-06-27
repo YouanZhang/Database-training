@@ -1,6 +1,6 @@
 from DAO.link_database import *
 from DAO.link_redis import *
-
+from DAO.SKU import *
 def addMerColletion(buyer_id, sku_id):
     conn = link_mysql()
     cur = conn.cursor()
@@ -21,11 +21,16 @@ def findMerCollectionByBuyerID(buyer_id):
     r = link_redis()
     rdata = r.lrange(buyer_id, 0, -1)
     int_data = [int(x)for x in rdata]
+    retlist = []
+    for i in range(len(int_data)):
+        valid, sku_info = findSKUbyid(int_data[i])
+        if valid:
+            retlist += sku_info
     cur.execute('SELECT * FROM MER_COLLECTION WHERE `BUYER_ID` = %s',(buyer_id,))
     data = cur.fetchall()
     cur.close()
     conn.close()
-    return int_data
+    return retlist
 
 def dropMerCollection(buyer_id, sku_id):
     conn = link_mysql()
@@ -37,5 +42,5 @@ def dropMerCollection(buyer_id, sku_id):
     conn.close()
 
 #addMerColletion(5, 3)
-#print(findMerCollectionByBuyerID(5))
+print(findMerCollectionByBuyerID(233))
 #dropMerCollection(5, 3)
