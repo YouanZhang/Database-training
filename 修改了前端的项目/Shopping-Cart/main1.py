@@ -10,6 +10,7 @@ from DAO.SKU import *
 from DAO.shop import*
 from DAO.buyer import*
 from DAO.second_class import *
+from DAO.mer_collection import *
 from Controller.login_cotrol import *
 from Controller.shop_control import *
 from Controller.buyer_control import *
@@ -19,6 +20,7 @@ from Controller.cart_control import *
 from Controller.home_control import *
 from Controller.order_control import *
 from Controller.search_control import *
+
 app = Flask(__name__)
 app.secret_key = 'random string'
 UPLOAD_FOLDER = 'static/uploads'
@@ -432,7 +434,7 @@ def show_productDescription():
     #SKU_Id=10
     if SKU_Id==None:
         #测试使用的，用于进入详情
-        return redirect(url_for('myshop'))
+        return redirect(url_for('root'))
     #获取当前sku-id的详细信息
     valid, datas=findSKUbyid(SKU_Id)
     if valid:
@@ -529,8 +531,10 @@ def buyer_order():
     NULL,buyer_data=find_buyer_by_email(session['email'])
     Buyer_id=buyer_data[0][0]
     data=getBuyerOrder(Buyer_id)
+    if len(data)==0:
+        return render_template("buyer_order.html",loggedIn=True)
     i=data[0]
-    print(i[1][0])
+    #print(i[1][0])
     return render_template("buyer_order.html",data=data,loggedIn=True)
 
 @app.route("/seller_order")
@@ -538,9 +542,10 @@ def seller_order():
     valid,profileDatas=find_shop_by_email(session['email'])
     shop_id=profileDatas[0] [0] 
     data= findSubOrderByShopIdWithNameandCity(shop_id)
-    print(data[0])
-    print('hhhhhh')
+    #print(data[0])
+    #print('hhhhhh')
     return render_template("seller_order.html",data=data,loggedIn=True)
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -581,10 +586,34 @@ def findSKU_pic_by_id(id):
 def wishlist():
     if 'email' not in session:
         return redirect(url_for('test_loginForm'))
-    loggedIn = test_getLoginDetails()
     if session['is_buyer']!='True':
         return redirect(url_for("root"))
-    return render_template("wishlist.html",loggedIn=loggedIn)
+
+    valid,profileDatas= find_buyer_by_email(session['email'])
+    buyer_id=profileDatas[0][0]
+    data=findMerCollectionByBuyerID(buyer_id)
+
+    print(data)
+    return render_template("wishlist.html",data=data,loggedIn=True)
+
+
+@app.route('/addToCollection', methods=["GET", "POST"])
+def addToCollection():
+    print("起码进入了addCollection")
+    if 'email' not in session:
+        print("进了addCollection，但是没登录")
+        return redirect(url_for('test_loginForm'))
+    if session['is_buyer']!='True':
+        print("进了addCollection，但是是个seller")
+        return redirect(url_for('myshop'))
+    SKU_Id= int(request.args.get('SKU_Id'))
+    print("要加入collection的SKU_Id是%s" %(SKU_Id))
+    #还需要再从数据库读取库存确认最新的库存并对比
+    valid,profileDatas= find_buyer_by_email(session['email'])
+    buyer_id=profileDatas[0][0]
+    addMerColletion(buyer_id, SKU_Id)
+    return redirect(url_for('show_productDescription',SKU_Id=SKU_Id))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -145,16 +145,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+
                                     <!-- 每个商品展示为一个tr -->
+                                    {% for i in data %}
                                     <tr>
                                         <td class="product_remove">从愿望单删除的链接</td>
                                         <td class="product_thumb">
-                                            图片以及跳转到商品详情的链接
+                                            <img  src={{ url_for('static', filename='uploads/' + i[6]) }}  alt="这里放图片，还有商品详情的链接"> 
                                         </td>
-                                        <td class="product_name">商品名以及跳转到商品详情的链接</td>
-                                        <td class="product_price">价格</td>
-                                        <td class="product_total"><a href="#">Add To Cart</a></td>
+                                        <td class="product_name">{{i[1]}}</td>
+                                        <td class="product_price">{{i[3]}}</td>
+                                        <td class="product_total">
+                                            <!--<a href="#">Add To Cart</a>-->
+                                            <form action="/addToCart" method="POST" enctype="multipart/form-data">
+                                                <input type="hidden" name="SKU_Id" value="{{i[0]}}">
+                                                <input type="hidden" value="1" name="qty" >
+                                                <button class="button" type="submit">add to cart</button>
+                                            </form>
+                                        </td>
                                     </tr>
+                                    {% endfor %}
+
                                     <tr>
                                         <td class="product_remove">从愿望单删除的链接</td>
                                         <td class="product_thumb">
