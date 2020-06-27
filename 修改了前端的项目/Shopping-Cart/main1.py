@@ -599,12 +599,10 @@ def wishlist():
 
 @app.route('/addToCollection', methods=["GET", "POST"])
 def addToCollection():
-    print("起码进入了addCollection")
     if 'email' not in session:
-        print("进了addCollection，但是没登录")
         return redirect(url_for('test_loginForm'))
     if session['is_buyer']!='True':
-        print("进了addCollection，但是是个seller")
+        #print("进了addCollection，但是是个seller")
         return redirect(url_for('myshop'))
     SKU_Id= int(request.args.get('SKU_Id'))
     print("要加入collection的SKU_Id是%s" %(SKU_Id))
@@ -614,6 +612,21 @@ def addToCollection():
     addMerColletion(buyer_id, SKU_Id)
     return redirect(url_for('show_productDescription',SKU_Id=SKU_Id))
 
+@app.route('/remove_one_collection')
+def remove_one_collection():
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    if session['is_buyer']!='True':
+        #print("进了addCollection，但是是个seller")
+        return redirect(url_for('myshop'))
+    NULL,buyer_data=find_buyer_by_email(session['email'])
+    Buyer_Id=buyer_data[0][0]
+    SKU_Id = int(request.args.get('SKU_Id'))
+    #remove_one_cart(SKU_Id,Buyer_Id)
+    #removecart(Buyer_Id, SKU_Id)
+    dropMerCollection(Buyer_Id, SKU_Id)
+    print("删除的的collection's SKU_Id是%s" %(SKU_Id))
+    return redirect(url_for('wishlist'))    
 
 if __name__ == '__main__':
     app.run(debug=True)
