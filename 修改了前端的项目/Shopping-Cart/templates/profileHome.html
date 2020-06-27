@@ -42,6 +42,11 @@
 			CART {{noOfItems}}
 		</a>
 	</div>
+	<div id="kart">
+        <a class="link" href="/wishlist">
+           <img  src={{url_for('static', filename='images/wishlist1.png')}} id="wishIcon"/> WISH {{noOfItems}}
+        </a>
+        </div>
 		{% else %}
 		<div id="signInButton">
             <a class="link" href="/logout">Sign out</a>
