@@ -42,5 +42,5 @@ def dropMerCollection(buyer_id, sku_id):
     conn.close()
 
 #addMerColletion(5, 3)
-print(findMerCollectionByBuyerID(233))
+#print(findMerCollectionByBuyerID(233))
 #dropMerCollection(5, 3)
