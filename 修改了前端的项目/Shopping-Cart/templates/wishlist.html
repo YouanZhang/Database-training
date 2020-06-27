@@ -51,8 +51,9 @@
 
 <body>
     <div id="title">
+
         <a href="/">
-            <img id="logo" src={ { url_for( 'static', filename='images/logo.png' ) }} />
+            <img id="logo" src={{ url_for( 'static', filename='images/logo.png' ) }} />
         </a>
         <form action="/" method="POST" enctype="multipart/form-data">
             <input id="searchBox" type="text" name="search_key">
@@ -150,7 +151,9 @@
                                     <!-- 每个商品展示为一个tr -->
                                     {% for i in data %}
                                     <tr>
-                                        <td class="product_remove">从愿望单删除的链接</td>
+                                        <td class="product_remove">
+                                            <a href="/remove_one_collection?SKU_Id={{i[0]}}"><i class="fa fa-trash-o"></i></a>
+                                        </td>
                                         <td class="product_thumb">
                                            <a href="show_productDescription?SKU_Id={{i[0]}}"><img   src={{ url_for('static', filename='uploads/' + i[6]) }}  alt="这里放图片，还有商品详情的链接"> 
                                            </a> 
@@ -167,15 +170,6 @@
                                     </tr>
                                     {% endfor %}
 
-                                    <tr>
-                                        <td class="product_remove">从愿望单删除的链接</td>
-                                        <td class="product_thumb">
-                                            图片以及跳转到商品详情的链接
-                                        </td>
-                                        <td class="product_name">商品名以及跳转到商品详情的链接</td>
-                                        <td class="product_price">价格</td>
-                                        <td class="product_total"><a href="#">Add To Cart</a></td>
-                                    </tr>
 
                                 </tbody>
                             </table>
