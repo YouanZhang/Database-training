@@ -579,7 +579,12 @@ def findSKU_pic_by_id(id):
 
 @app.route('/wishlist')
 def wishlist():
-    return render_template("wishlist.html")
+    if 'email' not in session:
+        return redirect(url_for('test_loginForm'))
+    loggedIn = test_getLoginDetails()
+    if session['is_buyer']!='True':
+        return redirect(url_for("root"))
+    return render_template("wishlist.html",loggedIn=loggedIn)
 
 if __name__ == '__main__':
     app.run(debug=True)
