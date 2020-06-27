@@ -139,6 +139,7 @@ def add_SKU():
     if request.method == "POST":
         name = request.form['name']
         price = float(request.form['price'])
+        price=int(price*100)
         description = request.form['description']
         stock = int(request.form['stock'])
         SPU_Id = request.form['SPU_Id']
@@ -190,7 +191,7 @@ def edit_SKU():
 
         #调用函数来修改SKU信息
         name = request.form['SKU_name']
-        price = float(request.form['SKU_price'])
+        price = int(float(request.form['SKU_price'])*100)
         description = request.form['SKU_description']
         stock = int(request.form['SKU_qty'])
         #调用函数修改SKU信息
