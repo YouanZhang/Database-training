@@ -16,8 +16,8 @@ def addMerColletion(buyer_id, sku_id):
     conn.close()
 
 def findMerCollectionByBuyerID(buyer_id):
-    conn = link_mysql()
-    cur = conn.cursor()
+    #conn = link_mysql()
+    #cur = conn.cursor()
     r = link_redis()
     rdata = r.lrange(buyer_id, 0, -1)
     int_data = [int(x)for x in rdata]
@@ -26,10 +26,10 @@ def findMerCollectionByBuyerID(buyer_id):
         valid, sku_info = findSKUbyid(int_data[i])
         if valid:
             retlist += sku_info
-    cur.execute('SELECT * FROM MER_COLLECTION WHERE `BUYER_ID` = %s',(buyer_id,))
-    data = cur.fetchall()
-    cur.close()
-    conn.close()
+    #cur.execute('SELECT * FROM MER_COLLECTION WHERE `BUYER_ID` = %s',(buyer_id,))
+    #data = cur.fetchall()
+    #cur.close()
+    #conn.close()
     return retlist
 
 def dropMerCollection(buyer_id, sku_id):
