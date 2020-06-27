@@ -152,17 +152,17 @@
                                     <tr>
                                         <td class="product_remove">从愿望单删除的链接</td>
                                         <td class="product_thumb">
-                                            <img  src={{ url_for('static', filename='uploads/' + i[6]) }}  alt="这里放图片，还有商品详情的链接"> 
+                                           <a href="show_productDescription?SKU_Id={{i[0]}}"><img   src={{ url_for('static', filename='uploads/' + i[6]) }}  alt="这里放图片，还有商品详情的链接"> 
+                                           </a> 
                                         </td>
-                                        <td class="product_name">{{i[1]}}</td>
+                                        <td class="product_name">
+                                            <a  href="show_productDescription?SKU_Id={{i[0]}}">{{i[1]}}</a>
+                                        </td>
                                         <td class="product_price">{{i[3]}}</td>
                                         <td class="product_total">
                                             <!--<a href="#">Add To Cart</a>-->
-                                            <form action="/addToCart" method="POST" enctype="multipart/form-data">
-                                                <input type="hidden" name="SKU_Id" value="{{i[0]}}">
-                                                <input type="hidden" value="1" name="qty" >
-                                                <button class="button" type="submit">add to cart</button>
-                                            </form>
+ 
+                                               <a href="/show_productDescription?SKU_Id={{i[0]}}">add to cart </a>
                                         </td>
                                     </tr>
                                     {% endfor %}
