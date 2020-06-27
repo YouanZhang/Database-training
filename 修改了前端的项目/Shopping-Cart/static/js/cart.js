@@ -7,5 +7,5 @@ function getProductTotal(id, p) {
     for (var i = 0; i < list.length; i++) {
         cart_total = Number(cart_total) + Number(list[i].value);
     }
-    document.getElementById("cart_total").value = cart_total/100;
+    document.getElementById("cart_total").value = cart_total;
 }
